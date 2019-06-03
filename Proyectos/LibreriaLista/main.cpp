@@ -33,5 +33,12 @@ int main(){
 	
 	cout << "Tamaño al terminar: " << x.getTam() << endl;
 	
+	cout << "------------------------" << endl;
+	cout << "Borrando dato 1..." << endl;
+	x.borrar_nodo(1);
+	
+	cout << "Nuevo valor pos = 1: ";
+	cout << x.buscar(1) << endl;
+	
 	return 0;
 }
