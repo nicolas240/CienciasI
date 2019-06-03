@@ -93,6 +93,28 @@ T lista<T>::buscar(int pos){
 }
 
 template <class T>
+void lista<T>::borrar_nodo(int pos){
+	int cont;
+	nodo<T> *aux = NULL;
+	nodo<T> *aux2 = NULL;
+	aux = cabeza;
+	cont = 1;
+	while(cont < pos -1 && aux!=NULL){
+		aux = aux -> sig;
+		cont++;			
+	}
+	
+	if(pos == 1){
+		cabeza = aux -> sig;
+		delete aux;
+	}else{
+		aux2 = aux -> sig;
+		aux -> sig = aux2 -> sig;
+		delete aux2;
+	}
+}
+
+template <class T>
 int lista<T>::getTam(){
 	return tam;
 }
