@@ -26,10 +26,10 @@ class lista{
 			int cont=1;
 			nodo<T> *recorre, *aux=cabeza;
 			while(cont < tam && aux!=NULL){
-			recorre=aux;
-			aux = aux -> sig;
-			delete recorre;
-			cont++;				
+				recorre=aux;
+				aux = aux -> sig;
+				delete recorre;
+				cont++;				
 			}
 		}
 		void insertar_nodo(int pos, T D);
