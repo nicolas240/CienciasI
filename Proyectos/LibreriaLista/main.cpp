@@ -10,7 +10,7 @@ int main(){
 	lista <float> y;
 	lista <char> z;
 	
-	cout << "TamaÃ±o inicial: " << x.getTam() << endl;
+	cout << "Tamaño inicial: " << x.getTam() << endl;
 	
 	cout << "Insertando primer nodo..." << endl;
 	x.insertar_nodo(1, 8);
@@ -23,6 +23,7 @@ int main(){
 	cout << "Insertando tercer nodo..." << endl;
 	x.insertar_nodo(3, 400);
 	
+	cout<<"¿Es vacia la lista?:"<<x.esVacia()<<endl;
 	cout << "------------------------" << endl;
 	cout << "Buscando valor pos = 1: ";
 	cout << x.buscar(1) << endl;
@@ -30,15 +31,34 @@ int main(){
 	cout << x.buscar(2) << endl;
 	cout << "Buscando valor pos = 3: ";
 	cout << x.buscar(3) << endl;
-	
-	cout << "TamaÃ±o al terminar: " << x.getTam() << endl;
+	cout << "Tamaño al terminar: " << x.getTam() << endl;
 	
 	cout << "------------------------" << endl;
 	cout << "Borrando dato 1..." << endl;
 	x.borrar_nodo(1);
-	
 	cout << "Nuevo valor pos = 1: ";
 	cout << x.buscar(1) << endl;
 	
+	cout << "------------------------" << endl;
+	cout << "Cambiando dato 1..." << endl;	
+	x.modificar(1,500);	
+	cout << "Nuevo valor pos = 1: ";
+	cout << x.buscar(1) << endl;
+	
+	cout << "------------------------" << endl;
+	x.borrar_nodo(1);
+	cout<<"¿Es vacia la lista?:"<<x.esVacia()<<endl;
+	cout << "Buscando valor pos = 1: ";
+	cout << x.buscar(1) << endl;
+	/*cout << "Buscando valor pos = 2: ";
+	cout << x.buscar(2) << endl;
+	cout << "Buscando valor pos = 3: ";
+	cout << x.buscar(3) << endl;*/
+	cout << "Tamaño al terminar: " << x.getTam() << endl;
+
+	x.borrar_nodo(1);
+	cout<<"¿Es vacia la lista?:"<<x.esVacia()<<endl;
+	cout << "Buscando valor pos = 1: ";
+	cout << "Tamaño al terminar: " << x.getTam() << endl;
 	return 0;
 }
