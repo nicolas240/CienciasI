@@ -116,7 +116,7 @@ void lista<T>::borrar_nodo(int pos){
 		aux = aux -> sig;
 		cont++;			
 	}
-	if(tam!=1 || cabeza !=NULL){
+	if(tam > 1){
 		if(pos == 1){
 			cabeza = aux -> sig;
 			delete aux;
@@ -126,6 +126,13 @@ void lista<T>::borrar_nodo(int pos){
 			delete aux2;
 		}
 		tam--;
+	}else{
+		//Confirma que como solo hay un nodo, se ingrese el nodo 1 para borrarlo, de lo contrario no se borra nada
+		if(pos == 1){
+			cabeza = NULL;
+			tam--;
+		}
+		
 	}
 }
 
@@ -145,7 +152,7 @@ void lista<T>::modificar(int pos, T D){
 
 template <class T>
 bool lista<T>::esVacia(){
-	if(cabeza->sig==NULL)
+	if(cabeza == NULL)
 		return true;
 	else
 		return false;
