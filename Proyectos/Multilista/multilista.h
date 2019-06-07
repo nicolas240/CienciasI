@@ -229,35 +229,54 @@ void listaPrincipal::imprimirCabecera(){
 	}
 }
 
+void listaPrincipal::imprimirNombresOrden(){
+	nodo *aux = listaCabecera[0];
+	int cont = 1;
+	while(cont <= tam ){
+		cout << "Nom: " << aux->nombre <<endl;
+		aux = aux -> sig;
+		cont++;
+	}
+}
+
 void listaPrincipal::colocarCabecera(nodo *cabeza){
 	nodo *aux1, *aux2;
 	int posicion;
 	bool verifica;
 	
 	// Nombre
-	/*if(listaCabecera[0]==NULL){
+	if(listaCabecera[0]==NULL){
+		cout << "Enlazando a.. " << cabeza->nombre << " si listaCab es vacia" <<endl;
 		listaCabecera[0]=cabeza;
-		cout<<"Entro a verificar el NULL"<<endl;
-	}
-	else{
-		cout<<"Entro a mirar cuando no es NULL"<<endl;
+		listaCabecera[0]->sigCarrera==NULL;
+		//cout<<"Entro a verificar el NULL"<<endl;
+	}else if(cabeza->nombre < listaCabecera[0]->nombre){
+		cout << "Enlazando a.. " << cabeza->nombre << " este nombre es menor cab: " << listaCabecera[0]->nombre <<endl;
+		cabeza->sigNombre = listaCabecera[0];
+		listaCabecera[0]=cabeza;
+		
+	}else{
+		cout << "Enlazando a.. " << cabeza->nombre << " este nombre es mayor al primero cab: "<< listaCabecera[0]->nombre <<endl;
+		//cout<<"Entro a mirar cuando no es NULL"<<endl;
 		aux1=listaCabecera[0];
 		aux2=NULL;
 		int cont=0;
-		while(aux1->nombre > cabeza->nombre){
+		while(cabeza->nombre > aux1->nombre){
+			cout << cabeza->nombre << " es mayor a " << aux1->nombre <<endl;
 			aux2 = aux1;
-			aux1 = aux1->sigNombre;
-			cout << aux2->nombre <<endl;
-			cout << cabeza->nombre <<endl;
-			cout<<"veces del while: "<<cont<<endl;
+			aux1 = aux2->sigNombre;
+			//cout << aux2->nombre <<endl;
+			//cout << cabeza->nombre <<endl;
+			//cout<<"veces del while: "<<cont<<endl;
 			cont++;
 		}
-		cout<<"salio while while "<<cont<<endl;
+		cout << aux2->nombre << " < " << cabeza->nombre << " > " << aux1->nombre << endl;
+		//cout<<"salio while while "<<cont<<endl;
+		cabeza->sigNombre=aux1;
 		aux2->sigNombre=cabeza;
-		cabeza->sig=aux1;
-		listaCabecera[0]=aux1;
-		cout<<"Salio del while de recorrer la cabeza"<<endl;
-	}*/	
+		//cout<<"Salio del while de recorrer la cabeza"<<endl;
+	}
+	
 	//Carreras
 	posicion=buscarCarrera(cabeza->carrera);
 	cout<<"Posicion de la carrera: "<<posicion<<" "<<carac[posicion]<<endl;
