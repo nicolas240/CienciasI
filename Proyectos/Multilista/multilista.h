@@ -57,6 +57,8 @@ class listaPrincipal{
 		void colocarCabecera(nodo *cabeza);
 		int buscarCarrera(string carrera);
 		int buscarHobby(string hobby);
+		void imprimirCadenaOrden(int posicion);
+		void imprimirPosicion(nodo *aux);
 		/*void compararNombre( *cabeza);
 		void compararEdad(nodo *);*/
 };
@@ -216,12 +218,18 @@ void listaPrincipal::imprimir(){
 	nodo *aux = cab;
 	int cont = 1;
 	while(cont <= tam ){
-		cout <<"Nom: " << aux -> nombre << " | Carr:" << aux -> carrera <<" | Hob: " << aux -> hobby <<" | Edad: " << aux -> edad;
-		cout <<" | SigN: " << aux -> sigNombre <<" | SigCa: " << aux -> sigCarrera <<" | SigH: " << aux -> sigHobby <<" | SigE: " << aux -> sigEdad << endl;
+		imprimirPosicion(aux);
 		aux = aux -> sig;
 		cont++;
 	}
 }
+
+void listaPrincipal::imprimirPosicion(nodo *aux){
+		cout <<"Nom: " << aux -> nombre << " | Carr:" << aux -> carrera <<" | Hob: " << aux -> hobby <<" | Edad: " << aux -> edad;
+		cout <<" | SigN: " << aux -> sigNombre <<" | SigCa: " << aux -> sigCarrera <<" | SigH: " << aux -> sigHobby <<" | SigE: " << aux -> sigEdad << endl;
+}
+
+
 
 void listaPrincipal::imprimirCabecera(){
 	for(int i=0;i<=tam-1;i++){
@@ -229,15 +237,17 @@ void listaPrincipal::imprimirCabecera(){
 	}
 }
 
-void listaPrincipal::imprimirNombresOrden(){
-	nodo *aux = listaCabecera[0];
-	int cont = 1;
-	while(cont <= tam ){
-		cout << "Nom: " << aux->nombre <<endl;
-		aux = aux -> sig;
+void listaPrincipal::imprimirCadenaOrden(int posicion){
+	nodo *aux = listaCabecera[posicion];
+	cout<<"Cadena ordenada por: "<<carac[posicion]<<endl;
+	int cont=1;
+	while(aux!=NULL){
+		imprimirPosicion(aux);
+		aux = aux -> sigNombre;
 		cont++;
 	}
 }
+
 
 void listaPrincipal::colocarCabecera(nodo *cabeza){
 	nodo *aux1, *aux2;
@@ -297,14 +307,18 @@ void listaPrincipal::colocarCabecera(nodo *cabeza){
 	cout<<"Posicion del hobby: "<<posicion<<" "<<carac[posicion]<<endl;
 	if(listaCabecera[posicion]==NULL){
 		listaCabecera[posicion]=cabeza;
+		listaCabecera[posicion]->sigHobby=NULL;
 	}else{
-		aux1=listaCabecera[posicion];
-		do{
-			aux2=aux1;
-			aux1=aux1->sigHobby;
-		}while(aux1!=NULL);
-		aux1=cabeza;
-		aux2->sigHobby=aux1;
+		if( (cabeza->hobby.compare(carac[posicion])) ){
+			aux1=listaCabecera[posicion];
+			while(aux1!=NULL){
+				aux2=aux1;
+				aux1=aux1->sigHobby;
+			}
+			aux1=cabeza;
+			aux2->sigHobby=aux1;
+			aux1->sigHobby=NULL;
+		}	
 	}	
 	//Edad
 	/*if(listaCabecera[9]==NULL){
