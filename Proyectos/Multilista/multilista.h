@@ -243,7 +243,14 @@ void listaPrincipal::imprimirCadenaOrden(int posicion){
 	int cont=1;
 	while(aux!=NULL){
 		imprimirPosicion(aux);
-		aux = aux -> sigNombre;
+		if(posicion==0)
+			aux = aux -> sigNombre;
+		if(posicion>0 && posicion<5)
+			aux=aux -> sigCarrera;
+		if(posicion>4 && posicion<8)
+			aux=aux -> sigHobby;
+		if(posicion==9)
+			aux=aux -> sigEdad;
 		cont++;
 	}
 }
@@ -309,15 +316,16 @@ void listaPrincipal::colocarCabecera(nodo *cabeza){
 		listaCabecera[posicion]=cabeza;
 		listaCabecera[posicion]->sigHobby=NULL;
 	}else{
-		if( (cabeza->hobby.compare(carac[posicion])) ){
+		if(listaCabecera[posicion]->sigHobby==NULL){
+			listaCabecera[posicion]->sigHobby=cabeza;
+		}else{	
 			aux1=listaCabecera[posicion];
-			while(aux1!=NULL){
-				aux2=aux1;
+			while(aux1->sigHobby!=NULL){
 				aux1=aux1->sigHobby;
 			}
-			aux1=cabeza;
-			aux2->sigHobby=aux1;
+			aux1->sigHobby=cabeza;
 			aux1->sigHobby=NULL;
+			cout<< "anterior valor: "<<aux2->nombre<<" y el valor que se añade: "<<aux1->nombre<<endl;	
 		}	
 	}	
 	//Edad
