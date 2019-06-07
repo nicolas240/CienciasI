@@ -235,7 +235,7 @@ void listaPrincipal::colocarCabecera(nodo *cabeza){
 	bool verifica;
 	
 	// Nombre
-	if(listaCabecera[0]==NULL){
+	/*if(listaCabecera[0]==NULL){
 		listaCabecera[0]=cabeza;
 		cout<<"Entro a verificar el NULL"<<endl;
 	}
@@ -257,21 +257,38 @@ void listaPrincipal::colocarCabecera(nodo *cabeza){
 		cabeza->sig=aux1;
 		listaCabecera[0]=aux1;
 		cout<<"Salio del while de recorrer la cabeza"<<endl;
-	}
-	/*	
+	}*/	
 	//Carreras
-	posicion=buscarCarrera(cabeza->carrera)
+	posicion=buscarCarrera(cabeza->carrera);
+	cout<<"Posicion de la carrera: "<<posicion<<" "<<carac[posicion]<<endl;
 	if(listaCabecera[posicion]==NULL){
 		listaCabecera[posicion]=cabeza;
+	}else{
+		aux1=listaCabecera[posicion];
+		do{
+			aux2=aux1;
+			aux1=aux1->sigCarrera;
+		}while(aux1!=NULL);
+		aux1=cabeza;
+		aux2->sigCarrera=aux1;
 	}
 	 
 	//Hobby
-	posicion=buscarHobby(cabeza->hobby)
+	posicion=buscarHobby(cabeza->hobby);
+	cout<<"Posicion del hobby: "<<posicion<<" "<<carac[posicion]<<endl;
 	if(listaCabecera[posicion]==NULL){
 		listaCabecera[posicion]=cabeza;
+	}else{
+		aux1=listaCabecera[posicion];
+		do{
+			aux2=aux1;
+			aux1=aux1->sigHobby;
+		}while(aux1!=NULL);
+		aux1=cabeza;
+		aux2->sigHobby=aux1;
 	}	
 	//Edad
-	if(listaCabecera[9]==NULL){
+	/*if(listaCabecera[9]==NULL){
 		listaCabecera[9]=cabeza;
 	}*/
 }
