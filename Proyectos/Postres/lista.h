@@ -1,6 +1,8 @@
 #ifndef LISTA_H
 #define LISTA_H
 
+#include <iostream>
+
 using namespace std;
 
 template <class T>
@@ -20,13 +22,24 @@ class lista{
 			cabeza = NULL; 
 			tam = 0;
 		}
+		~lista(){
+			int cont=1;
+			nodo<T> *recorre, *aux=cabeza;
+			while(cont < tam && aux!=NULL){
+				recorre=aux;
+				aux = aux -> sig;
+				delete recorre;
+				cont++;				
+			}
+		}
 		void insertar_nodo(int pos, T D);
 		void insertar_final(T D);
 		void insertar_inicio(T D);
 		void borrar_nodo(int pos);
-		T buscar(int pos);
 		void modificar(int pos, T D);
 		int getTam();
+		bool esVacia();
+		T buscar(int pos);
 };
 		
 template <class T>
@@ -103,20 +116,50 @@ void lista<T>::borrar_nodo(int pos){
 		aux = aux -> sig;
 		cont++;			
 	}
-	
-	if(pos == 1){
-		cabeza = aux -> sig;
-		delete aux;
+	if(tam > 1){
+		if(pos == 1){
+			cabeza = aux -> sig;
+			delete aux;
+		}else{
+			aux2 = aux -> sig;
+			aux -> sig = aux2 -> sig;
+			delete aux2;
+		}
+		tam--;
 	}else{
-		aux2 = aux -> sig;
-		aux -> sig = aux2 -> sig;
-		delete aux2;
+		//Confirma que como solo hay un nodo, se ingrese el nodo 1 para borrarlo, de lo contrario no se borra nada
+		if(pos == 1){
+			cabeza = NULL;
+			tam--;
+		}
+		
 	}
+}
+
+template <class T>
+void lista<T>::modificar(int pos, T D){
+	int cont=1;
+	nodo<T> *aux= cabeza;
+	while(cont < pos -1 && aux!=NULL){
+		aux = aux -> sig;
+		cont++;
+	}
+	if(pos==1)
+		cabeza->dato=D;
+	else
+		aux->sig->dato=D;
+}
+
+template <class T>
+bool lista<T>::esVacia(){
+	if(cabeza == NULL)
+		return true;
+	else
+		return false;
 }
 
 template <class T>
 int lista<T>::getTam(){
 	return tam;
 }
-
 #endif
