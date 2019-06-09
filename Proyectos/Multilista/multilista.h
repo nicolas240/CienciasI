@@ -10,11 +10,11 @@ struct nodo{
 	string carrera;
 	string hobby;
 	int edad;
-	nodo *sigNombre = NULL;
-	nodo *sigCarrera = NULL;
-	nodo *sigHobby = NULL;
-	nodo *sigEdad = NULL;
-	nodo *sig = NULL;
+	nodo *sigNombre;
+	nodo *sigCarrera;
+	nodo *sigHobby;
+	nodo *sigEdad;
+	nodo *sig;
 };
 
 // Listad de datos
@@ -44,19 +44,21 @@ class listaPrincipal{
 			}
 			delete []listaCabecera;
 		}
+		//Metodos de la multilista
 		void insertar_nodo(int pos, string nombre, string carrera, string hobby, int edad);
 		void insertar_final(string nombre, string carrera, string hobby, int edad);
 		void insertar_inicio(string nombre, string carrera, string hobby, int edad);
 		void borrar_nodo(int pos);
+		void borrarDeCab(nodo *borrar);
 		void modificar(int pos, string nombre, string carrera, string hobby, int edad);
-		int getTam();
-		bool esVacia();
-		bool buscar(int pos);
-		void imprimir();
-		void imprimirCabecera();
 		void colocarCabecera(nodo *cabeza);
 		int buscarCarrera(string carrera);
 		int buscarHobby(string hobby);
+		int getTam();
+		bool esVacia();
+		nodo *buscar(string nombre);
+		void imprimir();
+		void imprimirCabecera();
 		void imprimirCadenaOrden(int posicion);
 		void imprimirPosicion(nodo *aux);
 		/*void compararNombre( *cabeza);
@@ -66,10 +68,13 @@ class listaPrincipal{
 void listaPrincipal::insertar_nodo(int pos, string nombre, string carrera, string hobby, int edad){
 	int cont;
 	if (pos > tam && pos != 1){
+		//cout << "Insert.. a " << nombre << " con ins_final"<<endl;
 		insertar_final(nombre, carrera, hobby, edad);
 	}else if(pos == 1 && tam < 1){
+		//cout << "Insert.. a " << nombre << " con ins_inicio"<<endl;
 		insertar_inicio(nombre, carrera, hobby, edad);
 	}else{
+		//cout << "Insert.. a " << nombre << " con ins_medio"<<endl;
 		nodo *nuevo, *aux, *aux2;
 		nuevo = new nodo;
 		nuevo -> nombre = nombre;
@@ -129,20 +134,20 @@ void listaPrincipal::insertar_inicio(string nombre, string carrera, string hobby
 	nuevo -> sigEdad = NULL;
 	nuevo -> sig = cab;
 	cab = nuevo;
-	tam++;
 	colocarCabecera(nuevo);
+	tam++;
 }
 //Pending
-bool listaPrincipal::buscar(int pos){
+nodo* listaPrincipal::buscar(string nombre){
 	int cont;
 	nodo *aux = NULL;
 	aux = cab;
 	cont = 1;
-	while(cont <= pos-1 && aux!=NULL){
+	while(cont <= tam && (aux->nombre.compare(nombre)!=0)){
 		aux = aux -> sig;
 		cont++;
 	}
-	return true;
+	return aux;
 }
 
 void listaPrincipal::borrar_nodo(int pos){
@@ -158,26 +163,99 @@ void listaPrincipal::borrar_nodo(int pos){
 	if(tam > 1){
 		if(pos == 1){
 			cab = aux -> sig;
+			aux2 = aux->sig;
+			borrarDeCab(aux2);
 			delete aux;
 		}else{
 			aux2 = aux -> sig;
 			aux -> sig = aux2 -> sig;
-			delete aux2;
+			borrarDeCab(aux2);
 		}
 		tam--;
 	}else{
 		//Confirma que como solo hay un nodo, se ingrese posicion 1 para borrarlo, de lo contrario no se borra nada
 		if(pos == 1){
 			cab = NULL;
+			borrarDeCab(aux2);
 			tam--;
 		}
 
 	}
 }
 
+void listaPrincipal::borrarDeCab(nodo *borrar){
+	cout<<"Borrando a: "<<endl;
+	imprimirPosicion(borrar);
+	cout<<endl;
+	nodo *aux = NULL;
+	nodo *aux2 = NULL;
+	//Si el nodo a borrar encabeza alguna de las lista de cabeza
+	for(int i=0;i<=9;i++){
+		if(!listaCabecera[i]->nombre.compare(borrar->nombre)){
+			aux = listaCabecera[i];
+			if(i==0)
+				aux = aux -> sigNombre;
+			if(i>0 && i<=4)
+				aux = aux -> sigCarrera;
+			if(i>4 && i<=8)
+				aux = aux -> sigHobby;
+			if(i==9)
+				aux = aux -> sigEdad;
+			listaCabecera[i] = aux;
+		//Si el nodo a borrar no encabeza alguna lista
+		}else{
+			aux = listaCabecera[i];
+			//Este if permite que se mire en lista de carrera y hobby a la que pertenece el nodo a borrar
+			if(i == 0 or i == 9 or carac[i].compare(borrar->carrera)==0 or carac[i].compare(borrar->hobby)==0){
+				do{
+					if(i==0){
+						aux2 = aux;
+						aux = aux -> sigNombre;
+					}
+					if(i>0 && i<=4){
+						aux2 = aux;
+						aux = aux -> sigCarrera;
+					}
+					if(i>4 && i<=8){
+						aux2 = aux;
+						aux = aux -> sigHobby;
+					}
+					if(i==9){
+						aux2 = aux;
+						aux = aux -> sigEdad;
+					}
+						
+				}while(aux->nombre.compare(borrar->nombre)!=0);	 //La funcion ".compare" arroja 0 si las cadenas comparadas son iguales
+				if(i==0)
+					aux2->sigNombre = aux->sigNombre;
+				if(i>0 && i<=4)
+					aux2->sigCarrera = aux->sigCarrera;
+				if(i>4 && i<=8)
+					aux2->sigHobby = aux->sigHobby;
+				if(i==9)
+					aux2->sigEdad = aux->sigEdad;
+			}	
+		}
+	}
+	aux = borrar;
+	delete aux;		
+}
+
+
 void listaPrincipal::modificar(int pos, string nombre, string carrera, string hobby, int edad){
 	int cont=1;
 	nodo *aux= cab;
+	nodo *nuevo;
+	nuevo = new nodo;
+	nuevo -> nombre = nombre;
+	nuevo -> carrera = carrera;
+	nuevo -> hobby = hobby;
+	nuevo -> edad = edad;
+	nuevo -> sigNombre = NULL;
+	nuevo -> sigCarrera = NULL;
+	nuevo -> sigHobby = NULL;
+	nuevo -> sigEdad = NULL;
+	
 	while(cont < pos -1 && aux!=NULL){
 		aux = aux -> sig;
 		cont++;
@@ -191,6 +269,7 @@ void listaPrincipal::modificar(int pos, string nombre, string carrera, string ho
 		cab -> sigCarrera = NULL;
 		cab -> sigHobby = NULL;
 		cab -> sigEdad = NULL;
+		colocarCabecera(nuevo);
 	}else{
 		aux->sig -> nombre = nombre;
 		aux->sig -> carrera = carrera;
@@ -214,48 +293,7 @@ int listaPrincipal::getTam(){
 	return tam;
 }
 
-void listaPrincipal::imprimir(){
-	nodo *aux = cab;
-	int cont = 1;
-	while(cont <= tam ){
-		imprimirPosicion(aux);
-		aux = aux -> sig;
-		cont++;
-	}
-}
-
-void listaPrincipal::imprimirPosicion(nodo *aux){
-		cout <<"Nom: " << aux -> nombre << " | Carr:" << aux -> carrera <<" | Hob: " << aux -> hobby <<" | Edad: " << aux -> edad;
-		cout <<" | SigN: " << aux -> sigNombre <<" | SigCa: " << aux -> sigCarrera <<" | SigH: " << aux -> sigHobby <<" | SigE: " << aux -> sigEdad << endl;
-}
-
-
-
-void listaPrincipal::imprimirCabecera(){
-	for(int i=0;i<=tam-1;i++){
-		cout << carac[i]<<": "<<listaCabecera[i]<<endl;
-	}
-}
-
-void listaPrincipal::imprimirCadenaOrden(int posicion){
-	nodo *aux = listaCabecera[posicion];
-	cout<<"Cadena ordenada por: "<<carac[posicion]<<endl;
-	int cont=1;
-	while(aux!=NULL){
-		imprimirPosicion(aux);
-		if(posicion==0)
-			aux = aux -> sigNombre;
-		if(posicion>0 && posicion<5)
-			aux=aux -> sigCarrera;
-		if(posicion>4 && posicion<8)
-			aux=aux -> sigHobby;
-		if(posicion==9)
-			aux=aux -> sigEdad;
-		cont++;
-	}
-}
-
-
+//Metodo que pone los apuntadores para tener un orden
 void listaPrincipal::colocarCabecera(nodo *cabeza){
 	nodo *aux1, *aux2;
 	int posicion;
@@ -263,40 +301,32 @@ void listaPrincipal::colocarCabecera(nodo *cabeza){
 	
 	// Nombre
 	if(listaCabecera[0]==NULL){
-		cout << "Enlazando a.. " << cabeza->nombre << " si listaCab es vacia" <<endl;
 		listaCabecera[0]=cabeza;
 		listaCabecera[0]->sigCarrera==NULL;
-		//cout<<"Entro a verificar el NULL"<<endl;
 	}else if(cabeza->nombre < listaCabecera[0]->nombre){
-		cout << "Enlazando a.. " << cabeza->nombre << " este nombre es menor cab: " << listaCabecera[0]->nombre <<endl;
 		cabeza->sigNombre = listaCabecera[0];
 		listaCabecera[0]=cabeza;
 		
 	}else{
-		cout << "Enlazando a.. " << cabeza->nombre << " este nombre es mayor al primero cab: "<< listaCabecera[0]->nombre <<endl;
-		//cout<<"Entro a mirar cuando no es NULL"<<endl;
-		aux1=listaCabecera[0];
-		aux2=NULL;
-		int cont=0;
-		while(cabeza->nombre > aux1->nombre){
-			cout << cabeza->nombre << " es mayor a " << aux1->nombre <<endl;
-			aux2 = aux1;
-			aux1 = aux2->sigNombre;
-			//cout << aux2->nombre <<endl;
-			//cout << cabeza->nombre <<endl;
-			//cout<<"veces del while: "<<cont<<endl;
-			cont++;
+		//Si en la lista hay un elemento y el que ingresa tiene un nombre mayor, se agrega al final y el apuntador de la cabeza apunta ahora a este que llega
+		if(listaCabecera[0]->sigNombre==NULL){
+			listaCabecera[0]->sigNombre = cabeza;
+		}else{
+			aux1=listaCabecera[0];
+			aux2=NULL;
+			int cont=0;
+			while(cabeza->nombre > aux1->nombre){
+				aux2 = aux1;
+				aux1 = aux2->sigNombre;
+				cont++;
+			}
+			cabeza->sigNombre=aux1;
+			aux2->sigNombre=cabeza;	
 		}
-		cout << aux2->nombre << " < " << cabeza->nombre << " > " << aux1->nombre << endl;
-		//cout<<"salio while while "<<cont<<endl;
-		cabeza->sigNombre=aux1;
-		aux2->sigNombre=cabeza;
-		//cout<<"Salio del while de recorrer la cabeza"<<endl;
 	}
 	
 	//Carreras
 	posicion=buscarCarrera(cabeza->carrera);
-	cout<<"Posicion de la carrera: "<<posicion<<" "<<carac[posicion]<<endl;
 	if(listaCabecera[posicion]==NULL){
 		listaCabecera[posicion]=cabeza;
 	}else{
@@ -311,27 +341,44 @@ void listaPrincipal::colocarCabecera(nodo *cabeza){
 	 
 	//Hobby
 	posicion=buscarHobby(cabeza->hobby);
-	cout<<"Posicion del hobby: "<<posicion<<" "<<carac[posicion]<<endl;
 	if(listaCabecera[posicion]==NULL){
 		listaCabecera[posicion]=cabeza;
-		listaCabecera[posicion]->sigHobby=NULL;
 	}else{
-		if(listaCabecera[posicion]->sigHobby==NULL){
-			listaCabecera[posicion]->sigHobby=cabeza;
-		}else{	
-			aux1=listaCabecera[posicion];
-			while(aux1->sigHobby!=NULL){
-				aux1=aux1->sigHobby;
-			}
-			aux1->sigHobby=cabeza;
-			aux1->sigHobby=NULL;
-			cout<< "anterior valor: "<<aux2->nombre<<" y el valor que se añade: "<<aux1->nombre<<endl;	
-		}	
-	}	
+		aux1=listaCabecera[posicion];
+		do{
+			aux2=aux1;
+			aux1=aux1->sigHobby;
+		}while(aux1!=NULL);
+		aux1=cabeza;
+		aux2->sigHobby=cabeza;
+	}
+
 	//Edad
-	/*if(listaCabecera[9]==NULL){
+	if(listaCabecera[9]==NULL){
 		listaCabecera[9]=cabeza;
-	}*/
+		listaCabecera[9]->sigEdad==NULL;
+	}else if(cabeza->edad > listaCabecera[9]->edad){
+		cabeza->sigEdad = listaCabecera[9];
+		listaCabecera[9]=cabeza;
+		
+	}else{
+		//Si en la lista hay un elemento y el que ingresa tiene una edad menor, se agrega al final y el apuntador de la cabeza apunta ahora a este que llega
+		if(listaCabecera[9]->sigEdad==NULL){
+			listaCabecera[9]->sigEdad = cabeza;
+		}else{
+			aux1=listaCabecera[9];
+			aux2=NULL;
+			int cont=0;
+			while(cabeza->edad < aux1->edad){
+				aux2 = aux1;
+				aux1 = aux2->sigEdad;
+				cont++;
+			}
+			cabeza->sigEdad=aux1;
+			aux2->sigEdad=cabeza;	
+		}
+
+	}
 }
 
 int listaPrincipal::buscarCarrera(string carrera){
@@ -347,6 +394,47 @@ int listaPrincipal::buscarHobby(string hobby){
 			return i;
 	}
 	return -1;//retorno de control	
+}
+
+//Metodos para implrimir
+void listaPrincipal::imprimirCabecera(){
+	for(int i=0;i<=tam-1;i++){
+		cout << carac[i]<<": "<<listaCabecera[i]<<endl;
+	}
+}
+
+void listaPrincipal::imprimirCadenaOrden(int posicion){
+		nodo *aux;
+	if(posicion!=10){
+		aux = listaCabecera[posicion];
+		cout<<"Cadena ordenada por: "<<carac[posicion]<<endl;
+	}else{
+		aux = cab;
+		cout<<"Lista original: "<<endl;
+	}
+	int cont=1;
+	while(aux!=NULL){
+		imprimirPosicion(aux);
+		if(posicion==0)
+			aux = aux -> sigNombre;
+		if(posicion>0 && posicion<=4)
+			aux=aux -> sigCarrera;
+		if(posicion>4 && posicion<=8)
+			aux=aux -> sigHobby;
+		if(posicion==9)
+			aux=aux -> sigEdad;
+		//Imprime la lista original ordenada segun se inserto
+		if(posicion==10)
+			aux=aux -> sig;
+		cont++;
+	}
+	cout<<endl;
+}
+
+void listaPrincipal::imprimirPosicion(nodo *aux){
+	cout <<"Nom: " << aux -> nombre << " | Carr: " << aux -> carrera <<" | Hob: " << aux -> hobby <<" | Edad: " << aux -> edad;
+	//cout <<" | SigN: " << aux -> sigNombre <<" | SigCa: " << aux -> sigCarrera <<" | SigH: " << aux -> sigHobby <<" | SigE: " << aux -> sigEdad << endl;
+	cout<<endl;
 }
 
 #endif
