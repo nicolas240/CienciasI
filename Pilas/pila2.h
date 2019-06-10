@@ -1,3 +1,5 @@
+//Utiliza arreglos en lugar de listas enlazadas
+
 #ifndef PILA_H
 #define PILA_H
 using namespace std;
