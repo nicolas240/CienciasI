@@ -16,7 +16,6 @@ class lista{
 	private:
 		nodo <T> *cabeza;
 		int tam;
-	
 	public:
 		lista(){
 			cabeza = NULL; 
@@ -29,7 +28,7 @@ class lista{
 				recorre=aux;
 				aux = aux -> sig;
 				delete recorre;
-				cont++;				
+				cont++;
 			}
 		}
 		void insertar_nodo(int pos, T D);
@@ -41,7 +40,7 @@ class lista{
 		bool esVacia();
 		T buscar(int pos);
 };
-		
+
 template <class T>
 void lista<T>::insertar_nodo(int pos, T D){
 	int cont;
@@ -57,7 +56,7 @@ void lista<T>::insertar_nodo(int pos, T D){
 		cont = 1;
 		while(cont < pos-1 && aux!=NULL){
 			aux = aux -> sig;
-			cont++;				
+			cont++;
 		}
 		nuevo -> sig = aux -> sig;
 		aux -> sig = nuevo;
@@ -76,7 +75,7 @@ void lista<T>::insertar_final(T D){
 	cont = 1;
 	while(cont < tam && aux!=NULL){
 		aux = aux -> sig;
-		cont++;				
+		cont++;
 	}
 	aux -> sig = nuevo;
 	tam++;
@@ -100,7 +99,7 @@ T lista<T>::buscar(int pos){
 	cont = 1;
 	while(cont <= pos-1 && aux!=NULL){
 		aux = aux -> sig;
-		cont++;			
+		cont++;
 	}
 	return aux -> dato;
 }
@@ -114,7 +113,7 @@ void lista<T>::borrar_nodo(int pos){
 	cont = 1;
 	while(cont < pos -1 && aux!=NULL){
 		aux = aux -> sig;
-		cont++;			
+		cont++;
 	}
 	if(tam > 1){
 		if(pos == 1){
@@ -132,7 +131,6 @@ void lista<T>::borrar_nodo(int pos){
 			cabeza = NULL;
 			tam--;
 		}
-		
 	}
 }
 
