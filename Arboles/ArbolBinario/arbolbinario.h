@@ -24,9 +24,11 @@ class arbolbinario{
 			//cout<<"Aqui"<<endl;
 			for(int i=0;i<=tam;i++){
 				arbol[i] = new nodo<T>;
-				arbol[i]->der=arbol[i+1];
+				if(i==tam)
+					arbol[i]->der=NULL;
+				else
+					arbol[i]->der=arbol[i+1];
 			}
-			arbol[tam]->der=NULL;
 			arbol[0]->izq=NULL;
 			//cout<<"Aqui"<<endl;
 		}
