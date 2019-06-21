@@ -83,8 +83,6 @@ void arbolbinario<T>::insertar(T dato){
 		}
 		tam++;
 	}
-	
-	cout<<
 	cout<<"Fin insertar.."<<endl;
 }
 
