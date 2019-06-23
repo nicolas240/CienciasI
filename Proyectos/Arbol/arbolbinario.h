@@ -15,6 +15,7 @@ class ArbolArreglo {
 
 	private:
 		int tam;
+		int num;
 		nodo **arbol;
 
 		//cola salida;
@@ -53,6 +54,7 @@ class ArbolArreglo {
 
 ArbolArreglo::ArbolArreglo(int max){
 	tam = max;
+	num = 0;
 	arbol = new nodo*[tam+1];
 	
 	for(int i=0; i<tam+1; i++){
@@ -105,7 +107,7 @@ bool ArbolArreglo::insertar(int v){
 		}else{
 			arbol[aux_act]->der = pos;
 		}
-
+		num++;
 		return true;
 
 	}else{
@@ -125,7 +127,7 @@ void ArbolArreglo::recorerInord(){
 			padre=aux->izq;
 			aux=arbol[padre];
 		}
-		if(imp<tam-1){	//Si solo falta un nodo por imprimir ejecuta el else
+		if(imp<num-1){	//Si solo falta un nodo por imprimir ejecuta el else
 			cout<<aux->clave<<" ";
 			imp++;
 			if(aux->der!=0){	//Si el padre tiene hijos a la derecha empieza a revisar ese sub arbol 
@@ -135,104 +137,25 @@ void ArbolArreglo::recorerInord(){
 				aux=arbol[nodosImp.Pop()];
 				cout<<aux->clave<<" ";
 				imp++;
-				while(aux->der==0){  //Si el nodo que estaba en la pila no tiene hijos a la derecha, lo imprime y toma otro de la pila
-					aux=arbol[nodosImp.Pop()];
-					cout<<aux->clave<<" ";
-					imp++;
+				//cout<<"|Si|";
+				if(imp<num){
+					while(aux->der==0){  //Si el nodo que estaba en la pila no tiene hijos a la derecha, lo imprime y toma otro de la pila
+						aux=arbol[nodosImp.Pop()];
+						cout<<aux->clave<<" ";
+						imp++;
+					}
+					//cout<<"|"<<imp<<"y"<<num<<"|";
+					padre=aux->der;
+					aux=arbol[padre];
 				}
-				padre=aux->der;
-				aux=arbol[padre];
 			}		
 		}else{
 			cout<<aux->clave<<" ";
 			imp++;
 		}
-	}while(!nodosImp.PilaVacia() || imp<tam);
+		//cout<<"|"<<num<<"|";
+	}while(!nodosImp.PilaVacia() || imp<num);
 }
-	
-
-/*
-void ArbolArreglo::recorerInord(){
-	nodo *padre;
-	nodo *aux;
-	if(tam>1){
-		padre=arbol[arbol[0]->izq];
-		aux=NULL;
-		//nodosImp.Push(1);
-		/*while(!nodosImp.PilaVacia()){
-			nodosImp.Push(padre->dato);
-			if(padre->izq!=NULL){
-				for(int i=1;i<=hijos(padre,'I');i++){
-					padre=padre->izq;
-					cout<<padre->dato<<" ";
-				}
-				aux=padre->der;
-				while(aux==NULL){
-					padre=buscar(padre->dato,'P');
-					aux=padre->der;
-				}
-				padre=aux;
-			}
-			else{
-				cout<<padre->dato<<" ";
-				if(padre->der!=NULL){
-					padre=padre->der;
-				}else{
-					cout<<nodosImp.Pop()<<" "<<endl;
-					padre=buscar(padre->dato,'P');
-				}
-			}
-		}
-		do{
-			if(padre->izq!=0){
-				for(int i=1;i<=hijos(padre,'I');i++){
-					padre=arbol[padre->izq];
-					nodosImp.Push(padre->clave);
-				}
-				cout<<nodosImp.Pop()<<" ";
-				aux=arbol[padre->der];
-				while(aux==NULL){
-					padre=buscar(padre->clave,'P');
-					aux=padre->der;
-					cout<<nodosImp.Pop()<<" ";
-				}
-				padre=aux;
-			}
-			else{
-				cout<<padre->dato<<" ";
-				if(padre->der!=NULL){
-					padre=padre->der;
-				}else{
-					cout<<nodosImp.Pop()<<" "<<endl;
-					padre=buscar(padre->dato,'P');
-				}
-			}
-		}while(!nodosImp.PilaVacia());
-	}else if(tam==0){
-		cout<<"Arbol vacio"<<endl;
-	}else{
-		cout<<arbol[0]->izq->dato<<" "<<endl;
-	}
-	cout<<endl;
-}
-int ArbolAreglo::hijos(nodo *padre,char pos){
-	nodo *aux;
-	int hijos=0;
-	if(pos=='I'){
-		aux=arbol[padre->izq];
-		while(aux->izq!=0){
-			hijos++;
-			aux=arbol[aux->izq];
-		}
-	}else{
-		aux=arbol[padre->der];
-		while(aux->der!=0){
-			hijos++;
-			aux=arbol[aux->der];
-		}		
-	}
-	return hijos;
-}*/
 
 bool ArbolArreglo::buscarEliminar(int dato, int& padre, int& hijo){
 	if(hijo == 0) hijo = arbol[0]->izq;
@@ -260,14 +183,17 @@ bool ArbolArreglo::eliminar(int clave){
 	if(buscarEliminar(clave, padre, hijo)){
 		if(arbol[hijo]->der == 0 && arbol[hijo]->izq == 0){
 			eliminarNoHijos(padre, hijo);
+			num--;
 			return true;
 		}
 		if(arbol[hijo]->der != 0 && arbol[hijo]->izq != 0){
 			eliminarDosHijos(padre, hijo);
+			num--;
 			return true;
 		}
 		if(arbol[hijo]->der != 0 || arbol[hijo]->izq != 0){
 			eliminarUnHijos(padre, hijo);
+			num--;
 			return true;
 		}
 	}	
