@@ -22,7 +22,7 @@ class arbolbinario{
 	public:
 		arbolbinario(int tam){
 			max=tam;
-			//Asigancion de tamaño y llenado basico del arreglo que representa al arbol
+			//Asigancion de tamaÃ±o y llenado basico del arreglo que representa al arbol
 			arbol = new nodo <T> *[tam+1];
 			for(int i=0;i<=tam;i++){
 				arbol[i]=new nodo <T>;
