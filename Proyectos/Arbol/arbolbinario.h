@@ -2,7 +2,9 @@
 #define ARBOLARREGLO_H
 
 //#include"cola.h"
-#include"pila.h"
+#include "pila.h"
+#include "cola.h"
+#include <math.h>
 
 using namespace std;
 
@@ -12,20 +14,16 @@ struct nodo{
 };
 
 class ArbolArreglo {
-
 	private:
 		int tam;
 		int num;
 		nodo **arbol;
 
-		//cola salida;
-		//pila entrada;
-
 		void eliminarNoHijos(int, int);
 		void eliminarUnHijos(int, int);
 		void eliminarDosHijos(int, int);
 		pila nodosImp;
-
+		cola colaImp;
 	public:
 		ArbolArreglo(int);
 		~ArbolArreglo();
@@ -33,10 +31,10 @@ class ArbolArreglo {
 		bool insertar(int);
 		bool eliminar(int);
 		void recorerInord();
+		void recorerNiv();
 		int hijos(nodo *padre,char pos);
 		bool buscar(int, int);
 		bool buscarEliminar(int, int&, int&);
-		void rotar(int);
 		bool vacio();
 		bool lleno();
 
@@ -59,7 +57,6 @@ ArbolArreglo::ArbolArreglo(int max){
 	
 	for(int i=0; i<tam+1; i++){
 		arbol[i] = new nodo;
-
 		arbol[i]->clave = 0;
 		arbol[i]->izq = 0;
 		if(i != tam){
@@ -155,6 +152,40 @@ void ArbolArreglo::recorerInord(){
 		}
 		//cout<<"|"<<num<<"|";
 	}while(!nodosImp.PilaVacia() || imp<num);
+}
+
+void ArbolArreglo::recorerNiv(){
+	nodo *aux=arbol[arbol[0]->izq];
+	cola hermanos;
+	int prueba=1;
+	int nivel=1,hermano=0,i,j;
+	colaImp.ImprimirCola();
+	do{
+		if(nivel==1){
+			cout<<aux->clave<<" ";
+			if(aux->izq!=0){
+				colaImp.InsCola(aux->izq);
+			}
+			if(aux->der!=0){
+				colaImp.InsCola(aux->der);
+			}
+		}else{
+			for(i=1;i<=(pow(2,nivel)/2);i++){//se usara una potencia de dos los cuales son los posibles hermanos en los niveles 
+				hermano=colaImp.AtenderCola();
+				if(hermano!=-1){
+					cout<<arbol[hermano]->clave<<" ";
+					aux=arbol[hermano];
+					if(aux->izq!=0){
+						colaImp.InsCola(aux->izq);
+					}
+					if(aux->der!=0){
+						colaImp.InsCola(aux->der);
+					}
+				}
+			}
+		}
+		nivel++;
+	}while(!colaImp.ColaVacia());
 }
 
 bool ArbolArreglo::buscarEliminar(int dato, int& padre, int& hijo){
@@ -296,10 +327,6 @@ bool ArbolArreglo::buscar(int dato, int pos=0){
 	}
 
 	return false;
-}
-
-void ArbolArreglo::rotar(int pos){
-	
 }
 
 bool ArbolArreglo::vacio(){

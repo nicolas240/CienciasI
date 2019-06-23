@@ -25,19 +25,24 @@ int main(){
 	cout<<"Recorrido inorden: ";
 	arbol.recorerInord();
 	cout<<endl;
+
+	cout<<"Recorrido por niveles: ";
+	arbol.recorerNiv();
+	cout<<endl;
 	
 	cout<<"Borrando 180... "<<endl;
 	arbol.eliminar(180);
 	
-	cout<<"Recorrido inorden: ";
-	arbol.recorerInord();
+	cout<<"Recorrido por niveles: ";
+	arbol.recorerNiv();
 	cout<<endl;
 	
 	cout<<"Borrando 125... "<<endl;
 	arbol.eliminar(125);
 
-	cout<<"Recorrido inorden: ";
-	arbol.recorerInord(); 
+	cout<<"Recorrido por niveles: ";
+	arbol.recorerNiv();
+	cout<<endl; 
 	cout<<endl;
 	return 0;
 }

@@ -1,48 +1,47 @@
 #ifndef PILA_H     
 #define PILA_H    
 
-template <class T>
-struct nodopl{T dato; nodopl *sig;};
+struct nodopl{int dato; nodopl *sig;};
 
-template <class T>
 class pila{
 	private:
-		nodopl <T> *cab;
+		nodopl *cab;
 	public:
 	 	pila(){
-		 	cab= new nodopl<T>;
-	    	cab->dato=' ';
+		 	cab= new nodopl;
+	    	cab->dato=0;
 	    	cab->sig=NULL;}
-	    void Push(T v);
-	    T Pop();
+	    void Push(int v);
+	    int Pop();
 	    bool PilaVacia();
 	    ~pila();
 };
      
-template <class T>     
-void pila<T>::Push(T v){
-    nodopl <T> *t = new nodopl <T>;
+void pila::Push(int v){
+    nodopl *t = new nodopl;
     t->dato=v; 
     t->sig=cab->sig;
     cab->sig= t;
 }
 
-template <class T>
-T pila<T>::Pop(){
-    T x;
-    nodopl <T> *t= cab->sig;
-    cab->sig= t->sig; 
-    x=t->dato;
-    delete t;
-    return x;
+int pila::Pop(){
+	if(!PilaVacia()){
+	    int x;
+	    nodopl *t= cab->sig;
+	    cab->sig= t->sig; 
+	    x=t->dato;
+	    delete t;
+	    return x;
+	}
+	else
+	 return -1;
+    
 }
 
-template <class T>     
-bool pila<T>::PilaVacia(){return cab->sig== NULL;}
+bool pila::PilaVacia(){return cab->sig== NULL;}
 
-template <class T>
-pila<T>::~pila(){
-    nodopl <T> *t=cab;
+pila::~pila(){
+    nodopl *t=cab;
     while (t!=NULL){
         cab=t;
         t=t->sig;
