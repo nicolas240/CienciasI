@@ -1,29 +1,43 @@
 #include <iostream>
-#include <iostream>
 #include "arbolbinario.h"
 
 using namespace std;
 
+int main(){
 
+	ArbolArreglo arbol(13);
 
-int main(int argc, char** argv) {
-	arbolbinario <int> miarbol(11);
+	arbol.insertar(100);
+	arbol.insertar(50);
+	arbol.insertar(150);
+	arbol.insertar(30);
+	arbol.insertar(75);
+	arbol.insertar(125);
+	arbol.insertar(170);
+	arbol.insertar(10);
+	arbol.insertar(60);
+	arbol.insertar(90); 
+	arbol.insertar(145);
+	arbol.insertar(160);
+	arbol.insertar(180);
+	   
+	arbol.imprimir();
+	cout<<"Recorrido inorden: ";
+	arbol.recorerInord();
+	cout<<endl;
 	
-/*	miarbol.insertar(100);
-	miarbol.insertar(50);
-	miarbol.insertar(30);
-	miarbol.insertar(10);
-	miarbol.insertar(75);
-	miarbol.insertar(60);
-	miarbol.insertar(90);
-	miarbol.insertar(150);
-	miarbol.insertar(125);
-	miarbol.insertar(145);
-	miarbol.insertar(170);
-	miarbol.insertar(160);
-	miarbol.insertar(180);*/
+	cout<<"Borrando 180... "<<endl;
+	arbol.eliminar(180);
 	
-	miarbol.imprimir();
+	cout<<"Recorrido inorden: ";
+	arbol.recorerInord();
+	cout<<endl;
 	
+	cout<<"Borrando 125... "<<endl;
+	arbol.eliminar(125);
+
+	cout<<"Recorrido inorden: ";
+	arbol.recorerInord(); 
+	cout<<endl;
 	return 0;
 }
