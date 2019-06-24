@@ -31,6 +31,7 @@ class ArbolArreglo {
 		bool insertar(int);
 		bool eliminar(int);
 		void recorerInord();
+		void recorerPre();
 		void recorerNiv();
 		int hijos(nodo *padre,char pos);
 		bool buscar(int, int);
@@ -98,7 +99,6 @@ bool ArbolArreglo::insertar(int v){
 				lado = 0;
 			}
 		}
-
 		if(lado){
 			arbol[aux_act]->izq = pos;
 		}else{
@@ -106,7 +106,6 @@ bool ArbolArreglo::insertar(int v){
 		}
 		num++;
 		return true;
-
 	}else{
 		return false;
 	}
@@ -118,7 +117,6 @@ void ArbolArreglo::recorerInord(){
 	int padre = arbol[0]->izq;
 	aux=arbol[padre];
 	do{
-		
 		while(aux->izq!=0){	//Mientras el pare tenga hijos a la izquierda
 			nodosImp.Push(padre);
 			padre=aux->izq;
@@ -156,9 +154,7 @@ void ArbolArreglo::recorerInord(){
 
 void ArbolArreglo::recorerNiv(){
 	nodo *aux=arbol[arbol[0]->izq];
-	cola hermanos;
-	int prueba=1;
-	int nivel=1,hermano=0,i,j;
+	int nivel=1,hermano=0,i;
 	colaImp.ImprimirCola();
 	do{
 		if(nivel==1){
@@ -188,6 +184,35 @@ void ArbolArreglo::recorerNiv(){
 	}while(!colaImp.ColaVacia());
 }
 
+void ArbolArreglo::recorerPre(){
+	nodo *aux;
+	int padre = arbol[0]->izq;
+	bool lDer=false;
+	aux=arbol[padre];
+	do{
+		while(aux->izq!=0){	//Mientras el pare tenga hijos a la izquierda
+			cout<<aux->clave<<" ";
+			if(aux->der!=0)
+				nodosImp.Push(padre);
+			padre=aux->izq;
+			aux=arbol[padre];
+		}
+		cout<<aux->clave<<" ";
+		if(aux->der!=0 and aux->izq==0) aux=arbol[aux->der];
+		else if(!nodosImp.PilaVacia()){
+			aux=arbol[nodosImp.Pop()];
+			padre=aux->der;
+			aux=arbol[padre];
+		}
+		if(nodosImp.PilaVacia() && !lDer){
+			lDer=true;
+			padre=arbol[arbol[0]->izq]->der;
+			aux=arbol[padre];
+			nodosImp.Push(padre);
+		}
+	}while(!nodosImp.PilaVacia());	
+}
+
 bool ArbolArreglo::buscarEliminar(int dato, int& padre, int& hijo){
 	if(hijo == 0) hijo = arbol[0]->izq;
 
@@ -215,22 +240,17 @@ bool ArbolArreglo::eliminar(int clave){
 		if(arbol[hijo]->der == 0 && arbol[hijo]->izq == 0){
 			eliminarNoHijos(padre, hijo);
 			num--;
-			return true;
-		}
+			return true;}
 		if(arbol[hijo]->der != 0 && arbol[hijo]->izq != 0){
 			eliminarDosHijos(padre, hijo);
 			num--;
-			return true;
-		}
+			return true;}
 		if(arbol[hijo]->der != 0 || arbol[hijo]->izq != 0){
 			eliminarUnHijos(padre, hijo);
 			num--;
-			return true;
-		}
+			return true;}
 	}	
-
 	return false;
-
 }
 
 void ArbolArreglo::eliminarNoHijos(int padre, int hijo){
