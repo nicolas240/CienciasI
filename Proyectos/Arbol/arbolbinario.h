@@ -31,6 +31,7 @@ class ArbolArreglo {
 		bool insertar(int);
 		bool eliminar(int);
 		void recorerInord();
+		void recorerPosord();
 		void recorerPre();
 		void recorerNiv();
 		int hijos(nodo *padre,char pos);
@@ -149,6 +150,56 @@ void ArbolArreglo::recorerInord(){
 			imp++;
 		}
 		//cout<<"|"<<num<<"|";
+	}while(!nodosImp.PilaVacia() || imp<num);
+}
+
+void ArbolArreglo::recorerPosord(){
+	int imp = 0;
+	int control[tam];
+	for(int i=0;i<tam;i++)
+		control[i]=0;
+	bool pila = false;
+	nodo *aux;
+	int padre = arbol[0]->izq;
+	aux=arbol[padre];
+	do{
+		
+		while(aux->izq!=0 && pila == false){	//Mientras el pare tenga hijos a la izquierda
+			nodosImp.Push(padre);
+			control[padre]=1;
+			padre=aux->izq;
+			aux=arbol[padre];
+			pila = false;
+		}
+		if(imp<num-1){		//Si queda mas de un nodo por recorrer
+			if(aux->der!=0){
+				if(control[padre]>1){ //Se lleva control de si el padre fue tomado de la pila (>1)
+					cout<<aux->clave<<" ";
+					imp++;
+					padre=nodosImp.Pop();
+					aux=arbol[padre];
+					if(imp==num-1){
+						cout<<aux->clave<<" ";
+						imp++;
+					}
+				}else{	//Si es la primer 
+					nodosImp.Push(padre);
+					control[padre]=2;
+					padre=aux->der;
+					aux=arbol[padre];
+					pila = false;
+				}
+
+			}else{		//Si el nodo no tiene hijos a la derecha
+				cout<<aux->clave<<" ";
+				imp++;
+				padre=nodosImp.Pop();
+				aux=arbol[padre];
+				pila = true;
+			}
+			
+		}
+		//cout<<"|wh:"<<arbol[padre]->clave<<"| ";
 	}while(!nodosImp.PilaVacia() || imp<num);
 }
 
