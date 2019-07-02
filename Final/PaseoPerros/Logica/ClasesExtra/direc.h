@@ -8,6 +8,6 @@ class direc{
 		~direc(){}
 		int calle;
 		int carrera;
-		string nombre;
+		std::string nombre;
 };
 #endif
