@@ -44,7 +44,7 @@ class ArbolArreglo {
 
 		// Funcion provisional para ver los datos
 		void imprimir(){
-			cout << "Pos\t| Clav \t| Izq \t| Der \t| Pad. \t| ADer \t| AIzq \t| FE \t|" << endl;
+			cout << " Pos\t  Clav \t  Izq \t  Der \t  Pad. \t  ADer \t  AIzq \t  FE \t " << endl;
 			for(int i=0; i<tam+1; i++){
 				cout << "|"<< i << "\t| ";
 				cout << arbol[i]->clave << " \t| ";
