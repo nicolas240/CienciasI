@@ -48,6 +48,8 @@ void ArbolAVL::insertarAVL(int v){
 	altura(arbol[0]->izq);
 	//verificar si es necesario balancear
 	equilibrar(posN);
+	
+	imprimir();
 }
 
 bool ArbolAVL::equilibrar(int pos){
@@ -74,6 +76,7 @@ bool ArbolAVL::equilibrar(int pos){
 			if(arbol[recorrer->izq]->FE == 1){
 				cout<<"Rotacion Doble a la Derecha"<<endl;
 				rotarSenIzq(recorrer->izq);	//Rotacion sencilla a la izquierda sobre el hijo
+				//cout<<"Aqui"<<endl;
 				//imprimir();
 				rotarSenDer(pos);	//Rtacion sencilla a la izquierda sobre el nodo actual
 				//imprimir();
@@ -110,6 +113,9 @@ void ArbolAVL::rotarSenIzq(int pos){
 
 	//Rama izquierda del hijo pasa a ser la rama derecha del padre
 	act->der = hijoDer->izq;
+	//Si el nodo del hijo es diferente de cero se le asigna su padre (es decir la posicion actual)
+	if(act->der!=0)
+		arbol[act->der]->padre=pos;
 	//Padre pasa a ser el hijo izquierdo del hijo
 	hijoDer->izq = pos;
 	//Si es la raiz, el hijo pasa a ser la raiz, asi que el padre del hijo es 0
@@ -119,8 +125,11 @@ void ArbolAVL::rotarSenIzq(int pos){
 	// Si no el abuelo pasa a ser el padre del hijo
 	}else{
 		hijoDer->padre = act->padre;
-		//Nodo derecho del abuelo es ahora el hijo (posH)
-		arbol[act->padre]->izq = posH;	
+		//Segun el lado del desbalance el nodo izquierdo o derecho del abuelo para a ser el nieto (posH)
+		if(arbol[act->padre]->izq==pos)
+			arbol[act->padre]->izq = posH;
+		else
+			arbol[act->padre]->der = posH;	
 	}
 	//Posicion del hijo pasa a ser la del padre del actual
 	act->padre = posH;
@@ -134,6 +143,9 @@ void ArbolAVL::rotarSenDer(int pos){
 	
 	//Rama derecha del hijo pasa a ser la rama izquierda del padre
 	act->izq = hijoIzq->der;
+	//Si el nodo del hijo es diferente de cero se le asigna su padre (es decir la posicion actual)
+	if(act->izq!=0)
+		arbol[act->izq]->padre=pos;
 	//Padre pasa a ser el hijo derecho del hijo
 	hijoIzq->der = pos;
 	//Si es la raiz, el hijo pasa a ser la raiz, asi que el padre del hijo es 0
@@ -143,16 +155,19 @@ void ArbolAVL::rotarSenDer(int pos){
 	// Si no el abuelo pasa a ser el padre del hijo
 	}else{
 		hijoIzq->padre = act->padre;
-		//Nodo izquierdo del abuelo es ahora el hijo (posH)
-		arbol[act->padre]->der = posH;	
+		//Segun el lado del desbalance el nodo izquierdo o derecho del abuelo para a ser el nieto (posH)
+		if(arbol[act->padre]->izq==pos)
+			arbol[act->padre]->izq = posH;
+		else
+			arbol[act->padre]->der = posH;
 	}
 	act->padre = posH;
 }
 
-
-void ArbolAVL::rotarDobIzq(int pos){
+/*
+void ArbolAVL::rotarDobIzq(int pos, bool sencilla){
 }
-void ArbolAVL::rotarDobDer(int pos){
+void ArbolAVL::rotarDobDer(int pos bool sencilla){
 }
-
+*/
 #endif

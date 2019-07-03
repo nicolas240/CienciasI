@@ -296,15 +296,19 @@ bool ArbolArreglo::buscarEliminar(int dato, int& padre, int& hijo){
 			hijo = arbol[hijo]->der;
 			return buscarEliminar(dato, padre, hijo);
 		}
+		cout<<"Hijo: "<<arbol[hijo]->clave<<endl;
 	}
 	return false;
 }
 
 bool ArbolArreglo::eliminar(int clave){
+	cout<<"Eliminar: "<<clave<<endl;
 	int padre = 0;
 	int hijo = arbol[0]->izq;
+	cout<<"Hijo: "<<arbol[hijo]->clave<<endl;
 
 	if(buscarEliminar(clave, padre, hijo)){
+		cout<<"esta:"<<endl;
 		if(arbol[hijo]->der == 0 && arbol[hijo]->izq == 0){
 			eliminarNoHijos(padre, hijo);
 			num--;

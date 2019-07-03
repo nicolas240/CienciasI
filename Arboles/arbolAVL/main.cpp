@@ -22,7 +22,7 @@ int main(){
 	arbol.insertarAVL(85);
 	arbol.insertarAVL(170);
 	arbol.insertarAVL(89);
-	arbol.insertarAVL(110);
+	arbol.insertarAVL(110); 
 	arbol.insertarAVL(87);
 	arbol.insertarAVL(120);
 	arbol.insertarAVL(95);
@@ -32,7 +32,12 @@ int main(){
 	arbol.insertarAVL(97);
 	arbol.insertarAVL(99);
 	
-	arbol.imprimir();
+	//arbol.imprimir();
+	 	
+ 	arbol.eliminar(88);
+	
+	arbol.imprimir();  
+	
 /*
 	ArbolAVL arbol(16);
  
