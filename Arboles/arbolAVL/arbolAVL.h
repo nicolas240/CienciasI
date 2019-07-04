@@ -9,6 +9,7 @@ class ArbolAVL : public ArbolArreglo{
 		ArbolAVL(int max);
 		int altura(int);
 		void insertarAVL(int);
+		void eliminarAVL(int);
 		bool equilibrar(int);
 		//Rotaciones
 		void rotarSenIzq(int);
@@ -24,7 +25,7 @@ ArbolAVL::ArbolAVL(int max):ArbolArreglo(max){
 //Calcula las arturas de los nodos
 int ArbolAVL::altura(int pos){
 	nodo *recorrer = arbol[pos];
-	if (pos == 0)//Si el nodo está vació entonces que salga.
+	if (pos == 0)//Si el nodo estï¿½ vaciï¿½ entonces que salga.
 		return 0 ; //Devuelve el valor cero.
 	else{
 		//cout<<"Dato:"<<recorrer->clave<<endl;
@@ -50,6 +51,11 @@ void ArbolAVL::insertarAVL(int v){
 	equilibrar(posN);
 	
 	imprimir();
+}
+
+void ArbolAVL::eliminarAVL(int v){
+	cout<<"Eliminado: "<<v<<endl;
+	eliminar(v);
 }
 
 bool ArbolAVL::equilibrar(int pos){

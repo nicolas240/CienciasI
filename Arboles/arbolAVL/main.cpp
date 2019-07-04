@@ -34,9 +34,18 @@ int main(){
 	
 	//arbol.imprimir();
 	 	
- 	arbol.eliminar(88);
+ 	//arbol.eliminarAVL(99);
+ 	
+ 	
+ 	arbol.eliminarAVL(120);
+ 	arbol.eliminarAVL(88);
+ 	//arbol.eliminarAVL(38);
 	
-	arbol.imprimir();  
+	arbol.imprimir();
+	
+	cout<<"Recorrido Inorden: ";
+	arbol.recorerInord();
+	cout<<endl;
 	
 /*
 	ArbolAVL arbol(16);
@@ -65,9 +74,7 @@ int main(){
 	arbol.insertarAVL(2); 
 	arbol.imprimir();
  
-	cout<<"Recorrido Inorden: "; 
-	arbol.recorerInord();   
-	cout<<endl;
+	https://youtu.be/3nqUrQRcckI
 
 	//cout<<"Borrando 180... "<<endl;
 	//arbol.eliminar(180);

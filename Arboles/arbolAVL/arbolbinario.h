@@ -302,13 +302,10 @@ bool ArbolArreglo::buscarEliminar(int dato, int& padre, int& hijo){
 }
 
 bool ArbolArreglo::eliminar(int clave){
-	cout<<"Eliminar: "<<clave<<endl;
 	int padre = 0;
 	int hijo = arbol[0]->izq;
-	cout<<"Hijo: "<<arbol[hijo]->clave<<endl;
 
 	if(buscarEliminar(clave, padre, hijo)){
-		cout<<"esta:"<<endl;
 		if(arbol[hijo]->der == 0 && arbol[hijo]->izq == 0){
 			eliminarNoHijos(padre, hijo);
 			num--;
@@ -331,7 +328,9 @@ void ArbolArreglo::eliminarNoHijos(int padre, int hijo){
 	}else{
 		arbol[padre]->der = 0;
 	}
-
+	//Poner padre en 0
+	arbol[hijo]->padre=0;
+	//Reasignacion de vacios
 	arbol[hijo]->der = arbol[0]->der;
 	arbol[0]->der = hijo;
 
@@ -339,20 +338,32 @@ void ArbolArreglo::eliminarNoHijos(int padre, int hijo){
 }
 
 void ArbolArreglo::eliminarUnHijos(int padre, int hijo){
+	//cout<<"padre: "<<arbol[padre]->clave<<endl;
+	//cout<<"hijo: "<<arbol[hijo]->clave<<endl;
 	if(arbol[padre]->izq == hijo){
 		if(arbol[hijo]->izq != 0){
 			arbol[padre]->izq = arbol[hijo]->izq;
+			//asignacion del padre
+			arbol[arbol[hijo]->izq]->padre=padre;
 		}else{
 			arbol[padre]->izq = arbol[hijo]->der;
+			//asignacion del padre
+			arbol[arbol[hijo]->der]->padre=padre;
 		}		
 	}else{
 		if(arbol[hijo]->izq != 0){
 			arbol[padre]->der = arbol[hijo]->izq;
+			//asignacion del padre
+			arbol[arbol[hijo]->izq]->padre=padre;
 		}else{
 			arbol[padre]->der = arbol[hijo]->der;
+			//asignacion del padre
+			arbol[arbol[hijo]->der]->padre=padre;
 		}
 	}
-	
+	//Poner padre en 0
+	arbol[hijo]->padre=0;
+	//Reasignacion de vacios
 	arbol[hijo]->der = arbol[0]->der;
 	arbol[0]->der = hijo;
 
@@ -367,8 +378,13 @@ void ArbolArreglo::eliminarDosHijos(int padre, int hijo){
 		padre_r = hijo_r;
 		hijo_r = arbol[hijo_r]->izq;
 	}
-
+	cout<<"padre_r: "<<arbol[padre_r]->clave<<endl;
+	cout<<"hijo_r: "<<arbol[hijo_r]->clave<<endl;
+	cout<<"padre: "<<arbol[padre]->clave<<endl;
+	cout<<"hijo: "<<arbol[hijo]->clave<<endl;
+	
 	// Criterio de hijos
+	//Si remplazo no tiene hijos se le quita al padre
 	if(arbol[hijo_r]->der == 0 && arbol[hijo_r]->izq == 0){
 		if(arbol[padre_r]->izq == hijo_r){
 			arbol[padre_r]->izq = 0;
@@ -376,6 +392,7 @@ void ArbolArreglo::eliminarDosHijos(int padre, int hijo){
 			arbol[padre_r]->der = 0;
 		}
 	}
+	
 	if(arbol[hijo_r]->der != 0){
 		if(arbol[padre_r]->izq == hijo_r){
 			arbol[padre_r]->izq = arbol[hijo_r]->der;
@@ -384,19 +401,26 @@ void ArbolArreglo::eliminarDosHijos(int padre, int hijo){
 		}
 	}
 
-	// Padre conecta con reemplazo
+	// Padre conecta con reemplazo y se actualiza padre
 	if(arbol[padre]->izq == hijo){
 		arbol[padre]->izq = hijo_r;
 	}else{
 		arbol[padre]->der = hijo_r;
 	}
+	arbol[hijo_r]->padre=padre;
 
-	// Nodo reemplazo copiar hijos del borrado
+	// Nodo reemplazo copiar hijos del borrado y actualizar padres
 	arbol[hijo_r]->izq = arbol[hijo]->izq;
+	arbol[arbol[hijo]->izq]->padre=hijo_r;
 	arbol[hijo_r]->der = arbol[hijo]->der;
+	arbol[arbol[hijo]->der]->padre=hijo_r;
 
+	//Nodo borrado se le quita el padre
+	arbol[hijo]->padre=0;
 	// nodo borrado a la lista de libres
 	arbol[hijo]->der = arbol[0]->der;
+	arbol[hijo]->izq = 0; //Borrar hijo
+	
 	arbol[0]->der = hijo;
 
 	arbol[hijo]->clave = 0;
