@@ -25,7 +25,7 @@ ArbolAVL::ArbolAVL(int max):ArbolArreglo(max){
 //Calcula las arturas de los nodos
 int ArbolAVL::altura(int pos){
 	nodo *recorrer = arbol[pos];
-	if (pos == 0)//Si el nodo est� vaci� entonces que salga.
+	if (pos == 0)//Si el nodo est? vaci? entonces que salga.
 		return 0 ; //Devuelve el valor cero.
 	else{
 		//cout<<"Dato:"<<recorrer->clave<<endl;
@@ -50,12 +50,17 @@ void ArbolAVL::insertarAVL(int v){
 	//verificar si es necesario balancear
 	equilibrar(posN);
 	
-	imprimir();
+	//imprimir();
 }
 
 void ArbolAVL::eliminarAVL(int v){
 	cout<<"Eliminado: "<<v<<endl;
+	//Eliminar nodo
 	eliminar(v);
+	//Calcular Factor de equilibrio
+	altura(arbol[0]->izq);
+	//verificar si es necesario balancear
+	equilibrar(posBorrado);	
 }
 
 bool ArbolAVL::equilibrar(int pos){

@@ -20,6 +20,7 @@ class ArbolArreglo {
 		int num;
 		nodo **arbol;
 		int posN;	//Posicion del nodo con que se esta trabajando
+		int posBorrado; //Posicion luego de borrado para revisar equilibrio
 
 		void eliminarNoHijos(int, int);
 		void eliminarUnHijos(int, int);
@@ -296,7 +297,7 @@ bool ArbolArreglo::buscarEliminar(int dato, int& padre, int& hijo){
 			hijo = arbol[hijo]->der;
 			return buscarEliminar(dato, padre, hijo);
 		}
-		cout<<"Hijo: "<<arbol[hijo]->clave<<endl;
+		//cout<<"Hijo: "<<arbol[hijo]->clave<<endl;
 	}
 	return false;
 }
@@ -335,11 +336,12 @@ void ArbolArreglo::eliminarNoHijos(int padre, int hijo){
 	arbol[0]->der = hijo;
 
 	arbol[hijo]->clave = 0;
+	//Se asigna la posicion de borrado para verificar luego el nivelado
+	posBorrado=padre;
 }
 
 void ArbolArreglo::eliminarUnHijos(int padre, int hijo){
-	//cout<<"padre: "<<arbol[padre]->clave<<endl;
-	//cout<<"hijo: "<<arbol[hijo]->clave<<endl;
+
 	if(arbol[padre]->izq == hijo){
 		if(arbol[hijo]->izq != 0){
 			arbol[padre]->izq = arbol[hijo]->izq;
@@ -368,6 +370,8 @@ void ArbolArreglo::eliminarUnHijos(int padre, int hijo){
 	arbol[0]->der = hijo;
 
 	arbol[hijo]->clave = 0;
+	//Se asigna la posicion de borrado para verificar luego el nivelado
+	posBorrado=padre;
 }
 
 void ArbolArreglo::eliminarDosHijos(int padre, int hijo){
@@ -378,13 +382,9 @@ void ArbolArreglo::eliminarDosHijos(int padre, int hijo){
 		padre_r = hijo_r;
 		hijo_r = arbol[hijo_r]->izq;
 	}
-	cout<<"padre_r: "<<arbol[padre_r]->clave<<endl;
-	cout<<"hijo_r: "<<arbol[hijo_r]->clave<<endl;
-	cout<<"padre: "<<arbol[padre]->clave<<endl;
-	cout<<"hijo: "<<arbol[hijo]->clave<<endl;
 	
 	// Criterio de hijos
-	//Si remplazo no tiene hijos se le quita al padre
+	//Si remplazo no tiene hijo se le quita al padre
 	if(arbol[hijo_r]->der == 0 && arbol[hijo_r]->izq == 0){
 		if(arbol[padre_r]->izq == hijo_r){
 			arbol[padre_r]->izq = 0;
@@ -392,13 +392,14 @@ void ArbolArreglo::eliminarDosHijos(int padre, int hijo){
 			arbol[padre_r]->der = 0;
 		}
 	}
-	
+	//Si el remplazo tiene hijo a la derecha
 	if(arbol[hijo_r]->der != 0){
 		if(arbol[padre_r]->izq == hijo_r){
 			arbol[padre_r]->izq = arbol[hijo_r]->der;
 		}else{
 			arbol[padre_r]->der = arbol[hijo_r]->der;
 		}
+		arbol[arbol[hijo_r]->der]->padre = padre_r;  //Al hijo del remplazo se le actualiza su padre
 	}
 
 	// Padre conecta con reemplazo y se actualiza padre
@@ -424,6 +425,9 @@ void ArbolArreglo::eliminarDosHijos(int padre, int hijo){
 	arbol[0]->der = hijo;
 
 	arbol[hijo]->clave = 0;
+	
+	//Se asigna la posicion de borrado para verificar luego el nivelado
+	posBorrado=padre_r;
 
 }
 
