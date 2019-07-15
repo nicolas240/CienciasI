@@ -1,21 +1,104 @@
 #ifndef MODELOS_H
 #define MODELO_H
 
-#include "../Logica/Sucursal.h"
+#include <fstream>
 #include <iostream>
+#include <string>
+
+#include "../Logica/Sucursal.h"
+#include "../Vista/Vista.h"
+
 using namespace std;
 
 class Modelo{
 	public:
 		Modelo(){}
 		~Modelo(){}
+		void ingresarSuc();
 		void iniciar();
 	private:
+		Vista menu;
 		int x;
 };
 
 void Modelo::iniciar(){
-		cout<<"actualizando base de datos"<<endl;
+	char opc;
+	do{	
+		system("cls");  
+		opc = menu.principal(); 
+		switch(opc){
+			//Ingresar sucursal 
+			case '1':  
+				system("cls");
+				ingresarSuc();  
+			break;
+			//Ingresar paseador
+			case '2': 
+				system("cls");
+				cout<<"Caso2"<<endl;
+				//mostrar();
+			break;
+			//Ingresar cliente
+			case '3':
+				system("cls");
+				cout<<"Caso3"<<endl;
+				//mostrar(); 
+			break;
+			//Realizar consulta
+			case '4':
+				system("cls"); 
+				cout<<"Caso4"<<endl; 
+				//mostrar();
+			break;
+			//Simular dia
+			case '5':
+				system("cls");
+				cout<<"Caso5"<<endl;
+				//mostrar();  
+			break;
+		}
+    }while(opc!='0');
+	
+	cout<<"GRACIAS POR UTILIZAR EL SISTEMA DE GESTION DE PASEO DE PERROS!!"<<endl;	
+}
+
+void Modelo::ingresarSuc(){
+	
+
+	Sucursal suc;
+	
+	//Llamar a la funcion que permite ingresa la sucursal y el objeto de tipo sucursal lleno
+	suc = menu.sucursal();
+	
+	//Abrir fichero para ingresar datos
+	ofstream archivo("Sucursales.txt",ios::app);
+	
+	archivo.write((char *)&suc,sizeof(suc));
+	
+	archivo.close();
+	
+	cout<<"Nom:"<<suc.getNombre()<<endl;
+	cout<<"Ger:"<<suc.getGerente()<<endl;
+	cout<<"Loc:"<<suc.getLocalidad()<<endl;
+	cout<<"Area: "<<suc.getArea();
+	
+	system("PAUSE");
+	/*
+	//Mosrar
+	Sucursal suc2;
+	fichero = fopen("Sucursales","rb");
+	fread(&suc2,sizeof(suc2),1,fichero);		//Lee los registros
+	while(!feof(fichero)){
+		cout<<"-----------------------"<<endl;
+		cout<<"Area: "<<suc2.getArea()<<endl;
+		cout<<"Nombre: "<<suc2.getNombre()<<endl;
+		cout<<"Gerente: "<<suc2.getGerente()<<endl;
+		cout<<"Localidad: "<<suc2.getLocalidad()<<endl;
+		fread(&suc2,sizeof(suc2),1,fichero);
+	}
+	
+	system("PAUSE");
+	*/
 }
 
 #endif

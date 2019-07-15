@@ -28,7 +28,7 @@ class Paseador{
 		int getPaseos();
 		
 	private:
-		Sucursal sucuTrab;
+		//Sucursal sucuTrab;
 		fch fNac;
 		direc dir;
 		horario horDisp;
