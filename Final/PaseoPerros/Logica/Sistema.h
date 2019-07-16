@@ -1,6 +1,10 @@
 #ifndef SISTEMA_H
 #define SISTEMA_H
 
+#include <iostream>
+
+using namespace std;
+
 //Estructuras de datos
 #include "lista.h"
 //#include "Pila.h"
@@ -20,7 +24,11 @@ class Sistema{
 		//ingresar
 		void ingSucursal(Sucursal s);
 		void ingPaseador(Paseador p);
+		void ingcliente(cliente c);
 		//eliminar
+		void borSucursal(int nit);
+		void ingPaseador(int nid);
+		void ingCliente(int cc);
 		
 		//consultas
 		
@@ -38,6 +46,9 @@ void Sistema::ingSucursal(Sucursal s){
 }
 
 void Sistema::ingPaseador(Paseador p){
-	paseadores.insertar_nodo(sucursales.getTam()+1,s);	
+	if(p.getEdad()>18)
+		paseadores.insertar_nodo(sucursales.getTam()+1,p);
+	else
+		cout<<"Error, paseador menor de edad"<<endl;
 }
 #endif

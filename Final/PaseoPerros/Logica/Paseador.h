@@ -9,20 +9,25 @@
 
 class Paseador{
 	public:
-		Paseador(){}
+		Paseador(){
+			pasDisp=2;
+			edad=0;
+		}
 		~Paseador(){}
 		
 		fch getFnac(){return fNac;}
 		horario horadiponible(){return horDisp;}
-		direc getDir(){return direc;}
+		direc getDir(){return dir;}
 		
-		char *getEmail();
-		char *getApll();
-		char *getNom();
-		char *getCiudadN();
-		char *getPaisN();
-		char *barr();
+		char *getEmail(){return email;}
+		char *getApll(){return apll;}
+		char *getNom(){return nom;}
+		char *getCiudadN(){return ciuNac;}
+		char *getPaisN(){return paisNac;}
+		char *barr(){return barrio;}
+		char getTid(){return tId;}
 		char getSexo(){return sexo;}
+		
 				
 		int getId(){return nId;}
 		int getCel(){return cel;}
@@ -30,9 +35,12 @@ class Paseador{
 		int getEdad(){return edad;}
 		int getPaseos(){return pasDisp;}
 		
-		void setFnac(fch fn){fNac=fn;}
+		void setFnac(fch fn){
+			fNac=fn;
+			edad=fNac.calEdad();
+		}
 		void setHdis(horario h){horDisp=h;}
-		void setDir(Dir d){direc=d;}
+		void setDir(direc d){dir=d;}
 		
 		
 		void setEmail(char *);
@@ -42,16 +50,16 @@ class Paseador{
 		void setPaisN(char *);
 		void setBarrio(char *);
 		void setSexo(char s){sexo=s;}
-				
-		void setId(int i){nid=i;}
+		void setTid(char t){tId=t;}
+						
+		void setId(int i){nId=i;}
 		void setCel(int c){cel=c;}
 		void setTelf(int t){telFj=t;}
-		void setEdad(int e){edad=e;}
 		void setPaseos(char a){
 			if(a=='-')
-				paseos--;
+				pasDisp--;
 			else
-				paseos++;8
+				pasDisp++;
 		}
 		
 	private:
@@ -61,6 +69,7 @@ class Paseador{
 		char nom[14];
 		char apll[14];
 		char email[30];
+		char barrio[25];
 		char ciuNac[15];
 		char paisNac[15];
 		char tId;
@@ -72,33 +81,33 @@ class Paseador{
 		int telFj;
 };
 
-void Paseador::setApll(char *nombre){
+void Paseador::setApll(char *apellido){
 	for(int i = 0; i < 14; ++i)
-		nomSucursal[i] = nombre[i];
+		apll[i] = apellido[i];
 }
 
-void Paseador::setBarrio(char *gerente){
+void Paseador::setBarrio(char *barr){
 	for(int i = 0; i < 25; ++i)
-		nomGerente[i] = gerente[i];
+		barrio[i] = barr[i];
 }
 
-void Paseador::setCiudadN(char *local){
+void Paseador::setCiudadN(char *ciudad){
 	for(int i = 0; i < 15; ++i)
-		localidad[i] = local[i];
+		ciuNac[i] = ciudad[i];
 }
 
-void Paseador::setEmail(char *local){
+void Paseador::setEmail(char *correo){
 	for(int i = 0; i < 30; ++i)
-		localidad[i] = local[i];
+		email[i] = correo[i];
 }
 
-void Paseador::setNom(char *local){
+void Paseador::setNom(char *nombre){
 	for(int i = 0; i < 14; ++i)
-		localidad[i] = local[i];
+		nom[i] = nombre[i];
 }
 
-void Paseador::setPaisN(char *local){
+void Paseador::setPaisN(char *pais){
 	for(int i = 0; i < 15; ++i)
-		localidad[i] = local[i];
+		paisNac[i] = pais[i];
 }
 #endif

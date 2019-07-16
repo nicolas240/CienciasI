@@ -25,6 +25,7 @@ class Modelo{
 		void ingresar();
 		
 		//Control para eliminar
+		void eliminar();
 		
 		//Control para consultar
 		void verSucursal();
@@ -78,8 +79,7 @@ void Modelo::iniciarAdm(){
 			//Eliminar
 			case 2: 
 				system("cls");
-				cout<<"Caso 2"<<endl;
-				//verSucursal();
+				eliminar();
 			break;
 			//Consultar
 			case 3:
@@ -139,40 +139,36 @@ void Modelo::ingresar(){
 			case 2:  
 				system("cls");
 				miSistema.ingSucursal(vista.sucursal());//Vista para ingresar la Paseador
-				//ingresarCli();
 			break;
 			default:
 				cout<<"Opcion incorrecta"<<endl;
 			break;
 		}
     }while(opc!=0);
-/*
-	Sucursal suc;
-	
-	//Llamar a la funcion que permite ingresa la sucursal y el objeto de tipo sucursal lleno
-	suc = menu.sucursal();
-	//char *impr;
-	
-	//suc.getGerente(impr,25);
-	/*cout<<"Nom:"<<suc.getNombre()<<endl;
-	cout<<"Ger:"<<suc.getGerente()<<endl;
-	cout<<"Loc:"<<suc.getLocalidad()<<endl;
-	cout<<"Area: "<<suc.getArea()<<endl;
-	
-	
-	//Abrir fichero para ingresar datos
-	ofstream archivo("Sucursales.txt",ios::app);
-	
-	archivo.write((char *)&suc,sizeof(suc));
-	
-	archivo.close();
-	
-	verSucursal();
-	
-	system("PAUSE");
-*/
 }
 
+void Modelo::eliminar(){	
+	int opc;
+	do{	
+		system("cls");  
+		opc = vista.ingresar(); 
+		switch(opc){
+			//Ingresar nueva sucursal
+			case 1:  
+				system("cls");
+				miSistema.ingSucursal(vista.sucursal());//Vista para ingresar la sucursal
+			break;
+			//Ingresar nuevo paseador 
+			case 2:  
+				system("cls");
+				miSistema.ingSucursal(vista.sucursal());//Vista para ingresar la Paseador
+			break;
+			default:
+				cout<<"Opcion incorrecta"<<endl;
+			break;
+		}
+    }while(opc!=0);
+}
 
 void Modelo::verSucursal(){
 	

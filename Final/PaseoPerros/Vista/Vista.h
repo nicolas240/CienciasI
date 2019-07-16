@@ -19,6 +19,7 @@ class Vista{
 		int cliente();
 		
 		int ingresar();
+		int eliminar();
 		//vista ingresar
 		Sucursal sucursal();		
 		Paseador paseador();
@@ -190,12 +191,7 @@ Sucursal Vista::sucursal(){
 
 //Menu para ingresar paseador
 Paseador Vista::paseador(){
-		char sexo;
-		int pasDisp;//Paseos disponibles
-		int nId;
-		int edad;
-		int cel;
-		int telFj;	
+	
 	//Declaracion de Variables
 	Paseador p;
 	fch nac;
@@ -205,9 +201,7 @@ Paseador Vista::paseador(){
 	char texto[25];
 	char *apun[]={"                        "};
 	int entero;
-	int opc;
-	char *localidad[] = {"Suba       ", "Usaquen    ", "Chapinero ", "Kennedy    ", "Teusaquillo", "Usme       "};
-	
+	char var;
 	
 	//Muestra de menu y peticiones
 	system("cls");
@@ -287,6 +281,11 @@ Paseador Vista::paseador(){
 	apun[0] = texto;
 	p.setEmail(texto);
 
+	cout<<"||  barrio de residencia: ";
+	cin.getline(texto,15);
+	apun[0] = texto;
+	p.setCiudadN(texto);
+
 	cout<<"||  ciudad de nacimiento: ";
 	cin.getline(texto,15);
 	apun[0] = texto;
@@ -297,28 +296,6 @@ Paseador Vista::paseador(){
 	apun[0] = texto;
 	p.setPaisN(texto);
 	
-	cout<<"||  tipo de identificacion: ";
-	cin.getline(texto,14);
-	p.setPaisN(texto[0]);	
-
-	cout<<"||  Ingrese Nombre Gerente: ";
-	cin.getline(texto,25);
-	//getline(cin, texto);//Para string
-	s.setGerente(apun[0]);
-	
-	do{
-		//cin.ignore();
-		cout<<"||  Selecione Localidad: "<<endl;
-		cout<<"||  [1]-Suba"<<endl<<"||  [2]-Usaquen"<<endl<<"||  [3]-Chapinero"<<endl;
-		cout<<"||  [4]-Kennedy"<<endl<<"||  [5]-Teusaquillo"<<endl<<"||  [6]-Usme"<<endl<<"||  ->";
-		cin >> opc;
-		if(opc<1 || opc>6){
-			cout<<"||  Localidad invalida."<<endl;
-		}
-	}while(opc<1 || opc>6);
-
-	s.setLocalidad(localidad[opc-1]);
-	
 	cout<<"||  Direccion "<<endl<<"||  Calle: ";
 	cin >> entero;
 	direccion.calle = entero;
@@ -328,13 +305,42 @@ Paseador Vista::paseador(){
 	cout<<"||  No.: ";
 	cin >> entero;
 	direccion.numero = entero;
-	p.setDir(direccion);
+	p.setDir(direccion);	
 	
-	cout<<"||  Ingrese Area de Cobertura: ";
-	cin >> entero;
-	s.setArea(entero);
-	//modelo.getSistema().ingSucursal(s);
-	//cout<<"Para enviar: "<<s.getGerente()<<endl
-	return s;
+	cout<<"||  tipo de identificacion: ";
+	do{
+		//cin.ignore();
+		cout<<"||  Selecione su tipo de identificacion: "<<endl;
+		cout<<"||  [c]-Cedula de ciudadania colombiana"<<endl<<"||  [e]-cedula extranjera"<<endl;
+		cin >> var;
+		if(var!='c' || var!='e'){
+			cout<<"||  opcion invalida."<<endl;
+		}
+	}while(var!='c' || var!='e');
+	p.setTid(var);	
+	
+	cout<<"|| numero de identificacion: ";
+	cin>>entero;
+	p.setId(entero);
+
+	cout<<"||  sexo: ";
+	do{
+		cout<<"||  [m]-masculino"<<endl<<"||  [f]-femenino"<<endl;
+		cin >> var;
+		if(var!='m' || var!='f'){
+			cout<<"||  opcion invalida."<<endl;
+		}
+	}while(var!='m' || var!='f');
+	p.setSexo(var);
+	
+	cout<<"|| numero de celular: ";
+	cin>>entero;
+	p.setCel(entero);
+	
+	cout<<"|| numero de telefeno: ";
+	cin>>entero;
+	p.setTelf(entero);
+	
+	return p;
 }
 #endif
