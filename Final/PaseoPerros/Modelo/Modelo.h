@@ -16,6 +16,7 @@ class Modelo{
 		~Modelo(){}
 		void ingresarSuc();
 		void iniciar();
+		void verSucursal();
 	private:
 		Vista menu;
 		int x;
@@ -27,7 +28,7 @@ void Modelo::iniciar(){
 		system("cls");  
 		opc = menu.principal(); 
 		switch(opc){
-			//Ingresar sucursal 
+			//Ingresar sucursal  
 			case '1':  
 				system("cls");
 				ingresarSuc();  
@@ -35,8 +36,7 @@ void Modelo::iniciar(){
 			//Ingresar paseador
 			case '2': 
 				system("cls");
-				cout<<"Caso2"<<endl;
-				//mostrar();
+				verSucursal();
 			break;
 			//Ingresar cliente
 			case '3':
@@ -56,6 +56,9 @@ void Modelo::iniciar(){
 				cout<<"Caso5"<<endl;
 				//mostrar();  
 			break;
+			default:
+				cout<<"Opcion incorrecta"<<endl;
+			break;
 		}
     }while(opc!='0');
 	
@@ -69,6 +72,14 @@ void Modelo::ingresarSuc(){
 	
 	//Llamar a la funcion que permite ingresa la sucursal y el objeto de tipo sucursal lleno
 	suc = menu.sucursal();
+	//char *impr;
+	
+	//suc.getGerente(impr,25);
+	/*cout<<"Nom:"<<suc.getNombre()<<endl;
+	cout<<"Ger:"<<suc.getGerente()<<endl;
+	cout<<"Loc:"<<suc.getLocalidad()<<endl;
+	cout<<"Area: "<<suc.getArea()<<endl;*/
+	
 	
 	//Abrir fichero para ingresar datos
 	ofstream archivo("Sucursales.txt",ios::app);
@@ -77,28 +88,34 @@ void Modelo::ingresarSuc(){
 	
 	archivo.close();
 	
-	cout<<"Nom:"<<suc.getNombre()<<endl;
-	cout<<"Ger:"<<suc.getGerente()<<endl;
-	cout<<"Loc:"<<suc.getLocalidad()<<endl;
-	cout<<"Area: "<<suc.getArea();
+	verSucursal();
 	
 	system("PAUSE");
-	/*
-	//Mosrar
-	Sucursal suc2;
-	fichero = fopen("Sucursales","rb");
-	fread(&suc2,sizeof(suc2),1,fichero);		//Lee los registros
-	while(!feof(fichero)){
-		cout<<"-----------------------"<<endl;
-		cout<<"Area: "<<suc2.getArea()<<endl;
-		cout<<"Nombre: "<<suc2.getNombre()<<endl;
-		cout<<"Gerente: "<<suc2.getGerente()<<endl;
-		cout<<"Localidad: "<<suc2.getLocalidad()<<endl;
-		fread(&suc2,sizeof(suc2),1,fichero);
-	}
-	
-	system("PAUSE");
-	*/
+
 }
 
+
+void Modelo::verSucursal(){
+	
+	Sucursal suc2;
+	
+	ifstream archivo("Sucursales.txt");
+	
+	system("cls");
+	
+	archivo.read((char *)&suc2, sizeof(suc2));
+	while(archivo && !archivo.eof()){
+		cout<<"---------"<<endl;
+		cout<<"Nom:"<<suc2.getNombre()<<endl;
+		cout<<"Ger:"<<suc2.getGerente()<<endl;
+		cout<<"Loc:"<<suc2.getLocalidad()<<endl;
+		cout<<"Calle: "<<suc2.getDir().calle<<endl;
+		cout<<"Carr:"<<suc2.getDir().carrera<<endl;
+		cout<<"No.:"<<suc2.getDir().numero<<endl;
+		cout<<"Area: "<<suc2.getArea()<<endl;
+		archivo.read((char *)&suc2, sizeof(suc2));
+	}
+	//cout<<"Salto"<<endl;
+	system("PAUSE");
+}
 #endif

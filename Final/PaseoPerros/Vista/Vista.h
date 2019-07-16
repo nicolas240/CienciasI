@@ -53,6 +53,7 @@ Sucursal Vista::sucursal(){
 	direc direccion;
 	//std::string texto;
 	char texto[25];
+	char *apun[]={"                        "};
 	int entero;
 	int opc;
 	char *localidad[] = {"Suba       ", "Usaquen    ", "Chapinero ", "Kennedy    ", "Teusaquillo", "Usme       "};
@@ -66,14 +67,15 @@ Sucursal Vista::sucursal(){
 	cin.ignore();	//Ignora lo que este almacenado en el buffer esto para evita problemas con un registro siguiente
 	cout<<"||  Ingrese Nombre Sucursal: ";
 	cin.getline(texto,25);
+	apun[0] = texto;
 	//getline(cin, texto);//Para string
-	s.setNombre(texto);
+	s.setNombre(apun[0]);
 	
 	//cin.ignore();
 	cout<<"||  Ingrese Nombre Gerente: ";
 	cin.getline(texto,25);
 	//getline(cin, texto);//Para string
-	s.setGerente(texto);
+	s.setGerente(apun[0]);
 	
 	do{
 		//cin.ignore();
@@ -102,6 +104,8 @@ Sucursal Vista::sucursal(){
 	cout<<"||  Ingrese Area de Cobertura: ";
 	cin >> entero;
 	s.setArea(entero);
+	
+	//cout<<"Para enviar: "<<s.getGerente()<<endl;
 	
 	return s;
 }
