@@ -3,13 +3,14 @@
 
 class fch{
 	public:
-		fch(int a, int m){anio=a; mes=m;}
+		fch(int a, int m,int d){anio=a; mes=m; dia=d;}
 		fch(){}
 		~fch(){}
 		bool menor(fch);
 		int calTmp();
 		int anio;
 		int mes;
+		int dia;
 };
 
 bool fch::menor(fch com){

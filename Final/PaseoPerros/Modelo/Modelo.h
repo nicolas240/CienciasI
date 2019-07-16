@@ -5,7 +5,9 @@
 #include <iostream>
 #include <string>
 
-#include "../Logica/Sucursal.h"
+//Logica
+#include "../Logica/Sistema.h"
+
 #include "../Vista/Vista.h"
 
 using namespace std;
@@ -14,44 +16,79 @@ class Modelo{
 	public:
 		Modelo(){}
 		~Modelo(){}
-		void ingresarSuc();
+		
+		//Control para los menus
 		void iniciar();
+		void iniciarAdm();
+		void iniciarCli();
+		//Control para ingresar
+		void ingresar();
+		
+		//Control para eliminar
+		
+		//Control para consultar
 		void verSucursal();
+		
+		//Control para simular
+		
 	private:
-		Vista menu;
+		Sistema miSistema;
+		
+		Vista vista;
+		
 		int x;
 };
 
 void Modelo::iniciar(){
-	char opc;
+	int opc;
+	do{	
+		system("cls");
+		opc = vista.inicio(); 
+		switch(opc){
+			//Menu Adiminstrativo  
+			case 1:  
+				system("cls");
+				iniciarAdm();
+			break;
+			//Menu Cliente
+			case 2: 
+				system("cls");
+				iniciarCli();
+			break;
+			default:
+				cout<<"Opcion incorrecta"<<endl;
+			break;
+		}
+    }while(opc!=0);
+	
+	cout<<"GRACIAS POR UTILIZAR EL SISTEMA DE GESTION DE PASEO DE PERROS!!"<<endl;	
+}
+
+void Modelo::iniciarAdm(){
+	int opc;
 	do{	
 		system("cls");  
-		opc = menu.principal(); 
+		opc = vista.administrativo(); 
 		switch(opc){
-			//Ingresar sucursal  
-			case '1':  
+			//Ingresar  
+			case 1:  
 				system("cls");
-				ingresarSuc();  
+				ingresar();
 			break;
-			//Ingresar paseador
-			case '2': 
+			//Eliminar
+			case 2: 
 				system("cls");
-				verSucursal();
+				cout<<"Caso 2"<<endl;
+				//verSucursal();
 			break;
-			//Ingresar cliente
-			case '3':
-				system("cls");
-				cout<<"Caso3"<<endl;
-				//mostrar(); 
-			break;
-			//Realizar consulta
-			case '4':
+			//Consultar
+			case 3:
 				system("cls"); 
 				cout<<"Caso4"<<endl; 
 				//mostrar();
 			break;
 			//Simular dia
-			case '5':
+			case 4:
 				system("cls");
 				cout<<"Caso5"<<endl;
 				//mostrar();  
@@ -60,14 +97,56 @@ void Modelo::iniciar(){
 				cout<<"Opcion incorrecta"<<endl;
 			break;
 		}
-    }while(opc!='0');
-	
-	cout<<"GRACIAS POR UTILIZAR EL SISTEMA DE GESTION DE PASEO DE PERROS!!"<<endl;	
+    }while(opc!=0);
 }
 
-void Modelo::ingresarSuc(){
-	
+void Modelo::iniciarCli(){
+	int opc;
+	do{	
+		system("cls");  
+		opc = vista.administrativo(); 
+		switch(opc){
+			//Ingresar nuevo cliente  
+			case 1:  
+				system("cls");
+				cout<<"Caso 1"<<endl;
+				//ingresarSuc();
+			break;
+			//Ingresar simula un paseo de un cliente
+			case 2: 
+				system("cls");
+				cout<<"Caso 2"<<endl;
+			break;
+			default:
+				cout<<"Opcion incorrecta"<<endl;
+			break;
+		}
+    }while(opc!=0);
+}
 
+void Modelo::ingresar(){	
+	int opc;
+	do{	
+		system("cls");  
+		opc = vista.ingresar(); 
+		switch(opc){
+			//Ingresar nueva sucursal
+			case 1:  
+				system("cls");
+				miSistema.ingSucursal(vista.sucursal());//Vista para ingresar la sucursal
+			break;
+			//Ingresar nuevo paseador 
+			case 2:  
+				system("cls");
+				miSistema.ingSucursal(vista.sucursal());//Vista para ingresar la Paseador
+				//ingresarCli();
+			break;
+			default:
+				cout<<"Opcion incorrecta"<<endl;
+			break;
+		}
+    }while(opc!=0);
+/*
 	Sucursal suc;
 	
 	//Llamar a la funcion que permite ingresa la sucursal y el objeto de tipo sucursal lleno
@@ -78,7 +157,7 @@ void Modelo::ingresarSuc(){
 	/*cout<<"Nom:"<<suc.getNombre()<<endl;
 	cout<<"Ger:"<<suc.getGerente()<<endl;
 	cout<<"Loc:"<<suc.getLocalidad()<<endl;
-	cout<<"Area: "<<suc.getArea()<<endl;*/
+	cout<<"Area: "<<suc.getArea()<<endl;
 	
 	
 	//Abrir fichero para ingresar datos
@@ -91,13 +170,13 @@ void Modelo::ingresarSuc(){
 	verSucursal();
 	
 	system("PAUSE");
-
+*/
 }
 
 
 void Modelo::verSucursal(){
 	
-	Sucursal suc2;
+	/*Sucursal suc2;
 	
 	ifstream archivo("Sucursales.txt");
 	
@@ -116,6 +195,6 @@ void Modelo::verSucursal(){
 		archivo.read((char *)&suc2, sizeof(suc2));
 	}
 	//cout<<"Salto"<<endl;
-	system("PAUSE");
+	system("PAUSE");*/
 }
 #endif

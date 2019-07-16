@@ -4,7 +4,7 @@
 #include <string>
 
 struct dia{
-	std::string nombre;
+	//std::string nombre;
 	int horaIn;
 	int horaFn;
 };
@@ -14,7 +14,6 @@ class horario{
 		horario(){}
 		~horario(){}
 		bool disponible();
-	private:
 		dia semana[7];
 };
 
