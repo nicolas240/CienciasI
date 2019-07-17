@@ -2,9 +2,7 @@
 #define SUCURSAL_H
 
 #include "ClasesExtra/direc.h"
-#include "lista.h"
-#include "Cliente.h"
-#include "Paseador.h"
+
 #include <string>
 
 class Sucursal{
@@ -15,7 +13,6 @@ class Sucursal{
 			delete nomGerente;
 			delete nomSucursal;
 		}
-		
 		char *getNombre();
 		char *getGerente();
 		char *getLocalidad();
@@ -23,11 +20,11 @@ class Sucursal{
 		int getNit(){return nit;}
 		direc getDir(){return dir;}
 		
-		void setNit(int);
 		void setNombre(char *);
 		void setGerente(char *);
 		void setLocalidad(char *);
 		void setArea(int);
+		void setNit(int);
 		void setDir(direc);
 		
 	private:
@@ -36,7 +33,7 @@ class Sucursal{
 		direc dir;
 		char nomSucursal[25];
 		char nomGerente[25];
-		char localidad[11];
+		char localidad[11];	
 };
 
 char *Sucursal::getGerente(){
@@ -68,15 +65,16 @@ void Sucursal::setLocalidad(char *local){
 		localidad[i] = local[i];
 }
 
-void Sucursal::setNit(int n){
-	nit = n;
-}
-
 void Sucursal::setArea(int a){
 	area = a;
+}
+
+void Sucursal::setNit(int n){
+	nit = n;
 }
 
 void Sucursal::setDir(direc d){
 	dir = d;
 }
+
 #endif
