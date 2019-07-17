@@ -16,13 +16,14 @@ class Vista{
 		//vista menus
 		int inicio();
 		int administrativo();
-		int cliente();
+		int VCliente();
 		
 		int ingresar();
 		int eliminar();
 		//vista ingresar
 		Sucursal sucursal();		
 		Paseador paseador();
+		Cliente cliente();
 		//vista eliminar
 		
 		//vista consultas
@@ -81,11 +82,11 @@ int Vista::administrativo(){
 }
 
 //Menu para ingresar datos como administrativo
-int Vista::cliente(){
+int Vista::VCliente(){
 	int opc;
 	system("cls");
 	cout<<"  //////////////////////////////////////////////"<<endl;
-	cout<<" //      SISTEMA GESTION PASEO PERROS cliente//"<<endl;
+	cout<<" //      SISTEMA GESTION PASEO PERROS CLIENTE//"<<endl;
 	cout<<"//////////////////////////////////////////////"<<endl;
 	
 	do{
@@ -99,7 +100,7 @@ int Vista::cliente(){
 		cout<<"Selecione Opcion -> ";
 		cin>>opc;
 		cin.ignore();
-	}while(opc<0 || opc>4);	//Mientras la opcion sea incorrecta se ejecuta el menu
+	}while(opc<0 || opc>2);	//Mientras la opcion sea incorrecta se ejecuta el menu
 	return opc;
 }
 
@@ -284,7 +285,7 @@ Paseador Vista::paseador(){
 	cout<<"||  barrio de residencia: ";
 	cin.getline(texto,15);
 	apun[0] = texto;
-	p.setCiudadN(texto);
+	p.setBarrio(texto);
 
 	cout<<"||  ciudad de nacimiento: ";
 	cin.getline(texto,15);
@@ -342,5 +343,121 @@ Paseador Vista::paseador(){
 	p.setTelf(entero);
 	
 	return p;
+}
+
+//Menu para ingresar cliente
+Cliente Vista::cliente(){
+	
+	//Declaracion de Variables
+	Cliente c;
+	fch nac;
+	int opc;
+	char *localidad[] = {"Suba       ", "Usaquen    ", "Chapinero ", "Kennedy    ", "Teusaquillo", "Usme       "};
+	//std::string texto;
+	char texto[25];
+	char *apun[]={"                        "};
+	int entero;
+	char var;
+	
+	//Muestra de menu y peticiones
+	system("cls");
+	cout<<"  //////////////////////////////////////////////"<<endl;
+	cout<<" //             INGRESAR CLIENTE             //"<<endl;
+	cout<<"//////////////////////////////////////////////"<<endl;
+	cout<<"||                                            "<<endl;
+	cin.ignore();	//Ignora lo que este almacenado en el buffer esto para evita problemas con un registro siguiente
+	
+	cout<<"||  nombre: ";
+	cin.getline(texto,14);
+	apun[0] = texto;
+	c.setNom(apun[0]);
+	
+	cout<<"||  apellido: ";
+	cin.getline(texto,14);
+	apun[0] = texto;
+	c.setApll(apun[0]);
+	
+	do{
+		//cin.ignore();
+		cout<<"||  Selecione Localidad: "<<endl;
+		cout<<"||  [1]-Suba"<<endl<<"||  [2]-Usaquen"<<endl<<"||  [3]-Chapinero"<<endl;
+		cout<<"||  [4]-Kennedy"<<endl<<"||  [5]-Teusaquillo"<<endl<<"||  [6]-Usme"<<endl<<"||  ->";
+		cin >> opc;
+		if(opc<1 || opc>6){
+			cout<<"||  Localidad invalida."<<endl;
+		}
+	}while(opc<1 || opc>6);
+
+	c.setLocalidad(localidad[opc-1]);
+
+	cout<<"|| numero de identificacion: ";
+	cin>>entero;
+	c.setNid(entero);
+
+	cout<<"|| numero de perros: ";
+	cin>>entero;
+	c.setnPrr(entero);
+	
+	cout<<"||  sexo: ";
+	do{
+		cout<<"||  [m]-masculino"<<endl<<"||  [f]-femenino"<<endl;
+		cin >> var;
+		if(var!='m' || var!='f'){
+			cout<<"||  opcion invalida."<<endl;
+		}
+	}while(var!='m' || var!='f');
+	c.setSexo(var);	
+	
+	for(int i=0;i<c.getNPrr();i++){
+		
+		cout<<"||  Ingrese la fecha de nacimiento del canino "<<i<<" : ";
+		
+		cout<<"||  anio: ";
+		cin>>entero;
+		nac.anio=entero;
+		
+		cout<<"||  mes: ";
+		cin>>entero;
+		nac.mes=entero;
+		
+		cout<<"||  dia: ";
+		cin>>entero;
+		nac.dia=entero;
+		
+		c.perros[i].setFN(nac);
+		
+		cout<<"||  nombre: ";
+		cin.getline(texto,14);
+		apun[0] = texto;
+		c.perros[i].setNom(apun[0]);		
+
+		cout<<"||  raza: ";
+		cin.getline(texto,12);
+		apun[0] = texto;
+		c.perros[i].setRaza(apun[0]);
+
+		cout<<"||  tamanio: ";
+		do{
+			cout<<"||  [p]-pequenio"<<endl<<"||  [m]-mediano"<<endl;
+			cout<<"||  [g]-grande"<<endl;
+			cin >> var;
+			if(var!='p' && var!='m' && var!='g'){
+				cout<<"||  opcion invalida."<<endl;
+			}
+		}while( !(var=='p' || var=='f' || var=='g') );
+		c.perros[i].setTam(var);
+
+		cout<<"||  tipo de concentrado: ";
+		do{
+			cout<<"||  [a]-adultos"<<endl<<"||  [c]-cachorros"<<endl;
+			cout<<"||  [r]-razas"<<endl;
+			cin >> var;
+			if(var!='a' && var!='c' && var!='r'){
+				cout<<"||  opcion invalida."<<endl;
+			}
+		}while( !(var=='a' || var=='c' || var=='r') );
+		c.perros[i].setTcon(var);		
+	}
+	return c;
 }
 #endif

@@ -85,7 +85,7 @@ void Modelo::iniciarAdm(){
 			case 3:
 				system("cls"); 
 				cout<<"Caso4"<<endl; 
-				//mostrar();
+				//();
 			break;
 			//Simular dia
 			case 4:
@@ -104,13 +104,13 @@ void Modelo::iniciarCli(){
 	int opc;
 	do{	
 		system("cls");  
-		opc = vista.administrativo(); 
+		opc = vista.VCliente(); 
 		switch(opc){
 			//Ingresar nuevo cliente  
 			case 1:  
 				system("cls");
 				cout<<"Caso 1"<<endl;
-				//ingresarSuc();
+				miSistema.ingcliente(vista.cliente());
 			break;
 			//Ingresar simula un paseo de un cliente
 			case 2: 

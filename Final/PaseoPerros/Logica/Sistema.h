@@ -24,11 +24,11 @@ class Sistema{
 		//ingresar
 		void ingSucursal(Sucursal s);
 		void ingPaseador(Paseador p);
-		void ingcliente(cliente c);
+		void ingcliente(Cliente c);
 		//eliminar
 		void borSucursal(int nit);
-		void ingPaseador(int nid);
-		void ingCliente(int cc);
+		void borPaseador(int nid);
+		void borCliente(int cc);
 		
 		//consultas
 		
@@ -43,6 +43,10 @@ class Sistema{
 
 void Sistema::ingSucursal(Sucursal s){
 	sucursales.insertar_nodo(sucursales.getTam()+1,s);	
+}
+
+void Sistema::ingcliente(Cliente c){
+	clientes.insertar_nodo(clientes.getTam()+1,c);	
 }
 
 void Sistema::ingPaseador(Paseador p){
