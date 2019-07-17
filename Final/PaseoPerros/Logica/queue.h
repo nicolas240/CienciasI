@@ -3,16 +3,16 @@
 using namespace std;
 
 template <class T>
-struct nodo{
+struct nodoQ{
 	T dato;
-	nodo <T> *sig, *ant;
+	nodoQ <T> *sig, *ant;
 };
 
 template <class T>
 class Queue{
 	public:
     Queue(){tam=0; cab=NULL;fin=NULL;}
-    ~Queue(){nodo <T> *t=cab;
+    ~Queue(){nodoQ <T> *t=cab;
 			while (t!=fin){
 			cab=t;  t=t->sig;  delete cab;}}
 		void enqueue(T V, char pos);
@@ -22,7 +22,7 @@ class Queue{
 		bool vacia();
 		bool llena();
  	private:
-		nodo <T> *cab, *fin;
+		nodoQ <T> *cab, *fin;
 		int tam;
  };
 /*
@@ -56,7 +56,7 @@ void Queue<T>::enqueue(T info, char pos){
 
 template <class T>
 void Queue<T>::enqueue(T info, char pos){
-	nodo <T> *nuevo = new nodo<T>;
+	nodoQ <T> *nuevo = new nodoQ<T>;
 	nuevo->dato= info;
 	if(vacia()){
 		cab=fin=nuevo;
@@ -82,7 +82,7 @@ void Queue<T>::enqueue(T info, char pos){
 
 template <class T>
 T Queue<T>::dequeue(char pos){
-	nodo <T> *aux = NULL;
+	nodoQ <T> *aux = NULL;
 	if(tam==0){
 		cout<<"Cola vacia"<<endl;
 		return 0;
@@ -119,7 +119,7 @@ bool Queue<T>::vacia(){
 template <class T>
 void Queue<T>::imprimir(char pos){
 	T men;
-	nodo <T> *aux;
+	nodoQ <T> *aux;
 	if(tam==0){
 		cout<<"Cola vacia."<<endl;
 	}else{
@@ -137,7 +137,7 @@ void Queue<T>::imprimir(char pos){
 
 template <class T>
 void Queue<T>::imprimirCola(char pos){
-	nodo <T> *aux = NULL;
+	nodoQ <T> *aux = NULL;
 	int cont = 1;
 	if(tam==0)
 		cout<<"Cola Vacia."<<endl;

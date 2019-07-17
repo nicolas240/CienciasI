@@ -28,6 +28,7 @@ class Modelo{
 		void eliminar();
 		
 		//Control para consultar
+		void consulta();
 		void verSucursal();
 		
 		//Control para simular
@@ -129,7 +130,6 @@ void Modelo::iniciarCli(){
     }while(opc!=0);
 }
 
-
 //cargar Menu ingresar paseador
 void Modelo::ingresar(){	
 	int opc;
@@ -173,6 +173,77 @@ void Modelo::eliminar(){
 				system("cls");
 				miSistema.ingSucursal(vista.sucursal());//Vista para ingresar la Paseador
 			break;
+			default:
+				cout<<"Opcion incorrecta"<<endl;
+			break;
+		}
+    }while(opc!=0);
+}
+
+//cargar Menu ingresar paseador
+void Modelo::consulta(){	
+	int opc;
+	do{	
+		system("cls"); 
+		opc = vista.consultar();
+		int nit;
+		switch(opc){
+			//Encontrar sucursal
+			case 1:  
+				system("cls");
+				
+				miSistema.ingSucursal(vista.sucursal());//Vista para ingresar la sucursal
+			break;
+			//Ingresar nuevo paseador 
+			case 2:  
+				system("cls");
+				//miSistema.verPaseador();
+				//system("PAUSE");
+				miSistema.ingPaseador(vista.paseador());//Vista para ingresar la Paseador
+			break;
+			//Ingresar nuevo paseador 
+			case 3:  
+				system("cls");
+				//miSistema.verPaseador();
+				//system("PAUSE");
+				miSistema.ingPaseador(vista.paseador());//Vista para ingresar la Paseador
+			break;
+			//Ingresar nuevo paseador 
+			case 4:  
+				system("cls");
+				//miSistema.verPaseador();
+				//system("PAUSE");
+				miSistema.ingPaseador(vista.paseador());//Vista para ingresar la Paseador
+			break;
+			//Ingresar nuevo paseador 
+			case 5:  
+				system("cls");
+				//miSistema.verPaseador();
+				//system("PAUSE");
+				miSistema.ingPaseador(vista.paseador());//Vista para ingresar la Paseador
+			break;			
+			//Ingresar nuevo paseador 
+			case 6:  
+				system("cls");
+				//miSistema.verPaseador();
+				//system("PAUSE");
+				miSistema.ingPaseador(vista.paseador());//Vista para ingresar la Paseador
+			break;
+			//Ingresar nuevo paseador 
+			case 7:  
+				system("cls");
+				//miSistema.verPaseador();
+				//system("PAUSE");
+				miSistema.ingPaseador(vista.paseador());//Vista para ingresar la Paseador
+			break;
+			//Ingresar nuevo paseador 
+			case 8:  
+				system("cls");
+				//miSistema.verPaseador();
+				//system("PAUSE");
+				miSistema.ingPaseador(vista.paseador());//Vista para ingresar la Paseador
+			break;			
+																		
 			default:
 				cout<<"Opcion incorrecta"<<endl;
 			break;

@@ -9,9 +9,9 @@ class Sucursal{
 	public:
 		Sucursal(){}
 		~Sucursal(){
-			delete localidad;
+			/*delete localidad;
 			delete nomGerente;
-			delete nomSucursal;
+			delete nomSucursal;*/
 		}
 		char *getNombre();
 		char *getGerente();

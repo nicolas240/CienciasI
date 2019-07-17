@@ -8,12 +8,13 @@ using namespace std;
 //Estructuras de datos
 #include "lista.h"
 //#include "Pila.h"
-//#include "queue.h"
+#include "queue.h"
 
 //Clases
 #include "../Logica/Sucursal.h"
 #include "../Logica/Cliente.h"
 #include "../Logica/Paseador.h"
+#include "../Logica/ClasesExtra/direc.h"
 
 class Sistema{
 	
@@ -41,6 +42,7 @@ class Sistema{
 		void ingPaseador(int nid);
 		*/
 		//consultas
+		void buscarSucursal(direc d);
 		
 		//simulaciones
 		
@@ -73,7 +75,7 @@ void Sistema::ingPaseador(Paseador p){
 //Cargar cliente a lista y llmar a guardar al archivo
 void Sistema::ingCliente(Cliente c){
 	clientes.insertar_nodo(clientes.getTam()+1,c);
-	arCliente(c):
+	//arCliente(c):
 }
 
 //Guardar en archivo sucuarsal
@@ -108,7 +110,7 @@ void Sistema::arPaseador(Paseador pac){
 
 }
 
-//Guadar en archivo Cliente
+/*Guadar en archivo Cliente
 void Sistema::arCliente(Cliente cli){
 
 	//Abrir fichero para ingresar datos
@@ -122,7 +124,7 @@ void Sistema::arCliente(Cliente cli){
 	
 	system("PAUSE");
 
-}
+}*/
 
 
 //
@@ -153,7 +155,7 @@ void Sistema::verSucursal(){
 	cout<<endl;
 	system("PAUSE");
 }
-
+/*
 void Sistema::verPaseador(){
 	
 	Paseador pac;
@@ -186,39 +188,47 @@ void Sistema::verPaseador(){
 	cout<<endl;
 	system("PAUSE");
 	
+}*/
+
+void Sistema::verPaseador(){
+	
+	Paseador pac;
+	
+	ifstream archivo("BD//Paseadores.txt");
+	
+	system("cls");
+	
+	cout<<"  //////////////////////////////////////////////"<<endl;
+	cout<<" //                PASEADORES                //"<<endl;
+	cout<<"//////////////////////////////////////////////"<<endl;
+	
+	archivo.read((char *)&pac, sizeof(pac));
+	while(archivo && !archivo.eof()){
+		cout<<"||  Nom:"<<pac.getNom()<<" | ";
+		cout<<"Ape:"<<pac.getApll()<<" | ";
+		cout<<"Ciu:"<<pac.getCiudadN()<<" | ";
+		cout<<"Pais:"<<pac.getPaisN()<<" | ";
+		cout<<"Barr:"<<pac.barr()<<" | ";
+		cout<<"Doc:"<<pac.getTid()<<" | ";
+		cout<<"Sexo:"<<pac.getSexo()<<" | ";
+		cout<<"Doc:"<<pac.getTid()<<" | ";
+		cout<<"No.:"<<pac.getId()<<" | ";
+		cout<<"Cel.:"<<pac.getCel()<<" | ";
+		cout<<"Tel.:"<<pac.getTelf()<<" | ";
+		cout<<"Edad:"<<pac.getEdad()<<" | ";
+		cout<<"Paseos:"<<pac.getPaseos()<<endl;
+		archivo.read((char *)&pac, sizeof(pac));
+	}
+	cout<<endl;
+	system("PAUSE");
 }
 
-void Sistema::verPaseador(){
-	
-	Paseador pac;
-	
-	ifstream archivo("BD//Paseadores.txt");
-	
-	system("cls");
-	
-	cout<<"  //////////////////////////////////////////////"<<endl;
-	cout<<" //                PASEADORES                //"<<endl;
-	cout<<"//////////////////////////////////////////////"<<endl;
-	
-	archivo.read((char *)&pac, sizeof(pac));
-	while(archivo && !archivo.eof()){
-		cout<<"||  Nom:"<<pac.getNom()<<" | ";
-		cout<<"Ape:"<<pac.getApll()<<" | ";
-		cout<<"Ciu:"<<pac.getCiudadN()<<" | ";
-		cout<<"Pais:"<<pac.getPaisN()<<" | ";
-		cout<<"Barr:"<<pac.barr()<<" | ";
-		cout<<"Doc:"<<pac.getTid()<<" | ";
-		cout<<"Sexo:"<<pac.getSexo()<<" | ";
-		cout<<"Doc:"<<pac.getTid()<<" | ";
-		cout<<"No.:"<<pac.getId()<<" | ";
-		cout<<"Cel.:"<<pac.getCel()<<" | ";
-		cout<<"Tel.:"<<pac.getTelf()<<" | ";
-		cout<<"Edad:"<<pac.getEdad()<<" | ";
-		cout<<"Paseos:"<<pac.getPaseos()<<endl;
-		archivo.read((char *)&pac, sizeof(pac));
+void Sistema::buscarSucursal(direc d){
+	Queue <Sucursal> cola;
+	for(int i=1; i<=sucursales.getTam();i++){
+		if(sucursales.buscar(i).getDir().estaArea(d))
+			cola.enqueue(sucursales.buscar(i),'D');
 	}
-	cout<<endl;
-	system("PAUSE");
 	
 }
 

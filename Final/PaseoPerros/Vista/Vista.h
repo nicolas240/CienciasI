@@ -6,6 +6,7 @@
 #include "../Logica/Sucursal.h"
 #include "../Logica/Paseador.h"
 #include "../Logica/Cliente.h"
+#include "../Logica/ClasesExtra/direc.h"
 
 
 class Vista{
@@ -20,10 +21,13 @@ class Vista{
 		
 		int ingresar();
 		int eliminar();
+		int consultar();
 		//vista ingresar
 		Sucursal sucursal();		
 		Paseador paseador();
 		Cliente cliente();
+		
+		direc ingDir();
 		//vista eliminar
 		
 		//vista consultas
@@ -127,6 +131,57 @@ int Vista::ingresar(){
 	return opc;
 }
 
+//Menu ingresar
+int Vista::consultar(){
+	int opc;
+	system("cls");
+	cout<<"  //////////////////////////////////////////////"<<endl;
+	cout<<" //              Que desea consultar          //"<<endl;
+	cout<<"//////////////////////////////////////////////"<<endl;
+	
+	do{
+		cout<<"||                                                     ||"<<endl;
+		cout<<"||        [1] - Encontrar Sucursal                     ||"<<endl;
+		cout<<"||        [2] - Paseadores disponibles                 ||"<<endl;
+		cout<<"||        [3] - Paseadores disponibles para un cliente ||"<<endl;
+		cout<<"||        [4] - Razas de perros en una localidad       ||"<<endl;
+		cout<<"||        [5] - Perros paseados por un paseador        ||"<<endl;
+		cout<<"||        [6] - Resumen de un perro                    ||"<<endl;
+		cout<<"||        [7] - Perros de un tamanio en una localidad  ||"<<endl;
+		cout<<"||        [8] - Perros de una edad                     ||"<<endl;
+		cout<<"||------------------------------------------||"<<endl;
+		cout<<"||        [0] - Salir                       ||"<<endl;
+		cout<<"||                                          ||"<<endl;
+		cout<<"//////////////////////////////////////////////"<<endl;
+		cout<<"Selecione Opcion -> ";
+		cin>>opc;
+		cin.ignore();
+	}while(opc<0 || opc>4);	//Mientras la opcion sea incorrecta se ejecuta el menu
+	return opc;
+}
+
+//Menu para ingresar direccion
+direc Vista::ingDir(){
+	direc direccion;
+	int entero;
+	system("cls");
+	cout<<"  //////////////////////////////////////////////"<<endl;
+	cout<<" //  Ingrese una direccion para determinar   //"<<endl;
+	cout<<" //   una sucursal que puede hacerse cargo	//"<<endl;
+	cout<<" //   de los perros del area.                //"<<endl;
+	cout<<"//////////////////////////////////////////////"<<endl;
+	
+	cout<<"||  Direccion "<<endl<<"||  Calle: ";
+	cin >> entero;
+	direccion.calle = entero;
+	cout<<"||  Carrera: ";
+	cin >> entero;
+	direccion.carrera = entero;
+	cout<<"||  No.: ";
+	cin >> entero;
+	direccion.numero = entero;
+	return direccion;
+}
 //Menu para ingresar sucursal
 Sucursal Vista::sucursal(){
 	//Declaracion de Variables
@@ -476,7 +531,7 @@ Cliente Vista::cliente(){
 	return c;
 }
 
-//Ver sucursales
+/*Ver sucursales
 void Sistema::verSucursal(){
 	
 	Sucursal suc2;
@@ -538,6 +593,6 @@ void Sistema::verPaseador(){
 	cout<<endl;
 	system("PAUSE");
 	
-}
+}*/
 
 #endif
